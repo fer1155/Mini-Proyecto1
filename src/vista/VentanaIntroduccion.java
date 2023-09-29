@@ -17,12 +17,12 @@ import javax.swing.SwingConstants;
 import javax.swing.*;
 
 public class VentanaIntroduccion extends JFrame {  
+    private JLayeredPane layeredPane;
     private JPanel panel;
     private JLabel etiqueta;
     private ImageIcon imagen;
     private JTextField cajaTexto;
     private JButton boton1;
-    private JLayeredPane layeredPane;
     
     public VentanaIntroduccion (){
         //this.setSize(900,600);
