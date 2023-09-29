@@ -174,7 +174,7 @@ public class VentanaJuego extends JFrame {
         ActionListener oyenteDeAccion1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                
                 // Abre la ventana emergente
                 VentanaEmergente ventanaEmergente = new VentanaEmergente(jugador);
                 ventanaEmergente.setVisible(true);
