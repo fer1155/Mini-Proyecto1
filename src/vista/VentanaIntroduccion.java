@@ -92,7 +92,7 @@ public class VentanaIntroduccion extends JFrame {
         boton1 = new JButton("Iniciar Juego");
         boton1.setBounds(500, 480, 200, 40); 
         boton1.setForeground(Color.WHITE);
-        boton1.setFont(new Font("Centaur", 0, 30));
+        boton1.setFont(new Font("Kristen ITC", 0, 25));
         Color colorFondoBtn = new Color(16, 113, 229);
         boton1.setBackground(colorFondoBtn);
         Color colorBorde = new Color(94, 94, 94);
