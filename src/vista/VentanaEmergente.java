@@ -3,6 +3,7 @@ package vista;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
@@ -59,7 +60,7 @@ public class VentanaEmergente extends JFrame {
     
     private void establecerEtiqueta() {
         etiqueta1 = new JLabel("<html>¿Estás seguro de finalizar el juego?</html>");
-        etiqueta1.setBounds(65, 30, 350, 200);
+        etiqueta1.setBounds(95, 30, 285, 200);
         etiqueta1.setVerticalAlignment(SwingConstants.TOP);
         //etiqueta1.setHorizontalAlignment(SwingConstants.CENTER);
         etiqueta1.setOpaque(true); 
@@ -74,9 +75,9 @@ public class VentanaEmergente extends JFrame {
     }
     
     private void establecerBoton1() {
-        boton1 = new JButton("Volver");
+        boton1 = new JButton("volver");
         boton1.setFocusPainted(false);
-        boton1.setBounds(90, 150, 130, 45); 
+        boton1.setBounds(115, 150, 110, 45); 
         boton1.setForeground(Color.WHITE);
         boton1.setFont(new Font("Kristen ITC", 0, 20));
         Color colorFondoBtn = new Color(16, 113, 229);
@@ -97,8 +98,8 @@ public class VentanaEmergente extends JFrame {
     }
     
     private void establecerBoton2() {
-        boton2 = new JButton("Finalizar");
-        boton2.setBounds(250, 150, 130, 45); 
+        boton2 = new JButton("finalizar");
+        boton2.setBounds(250, 150, 110, 45); 
         boton2.setForeground(Color.WHITE);
         boton2.setFont(new Font("Kristen ITC", 0, 20));
         Color colorFondoBtn2 = new Color(16, 113, 229);
@@ -111,7 +112,8 @@ public class VentanaEmergente extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Cierra la ventana emergente
-                dispose();
+                //dispose();
+                cerrarTodasLasVentanas();
                 // Abre la ventana de instrucciones
                 VentanaEstadisticas ventanaEstadistcas = new VentanaEstadisticas(jugador);
                 ventanaEstadistcas.setVisible(true);
@@ -120,5 +122,13 @@ public class VentanaEmergente extends JFrame {
         
         boton2.addActionListener(oyenteDeAccion2);
     }   
+   public static void cerrarTodasLasVentanas() {
+        Window[] windows = Window.getWindows();
+        for (Window ventana : windows) {
+            if (ventana instanceof JFrame) {
+                ventana.dispose();
+            }
+        }
+    }
 }
 

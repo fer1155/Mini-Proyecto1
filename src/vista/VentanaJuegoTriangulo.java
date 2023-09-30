@@ -40,8 +40,9 @@ public class VentanaJuegoTriangulo extends JFrame {
     private int heightImgPrincipal;
     private Ronda ronda = new Ronda();
     
-    public VentanaJuegoTriangulo (Persona jugador){
+    public VentanaJuegoTriangulo (Persona jugador, Ronda ronda){
         this.jugador = jugador;
+        this.ronda = ronda;
         //this.setSize(900,600);
         this.setBounds(200, 50, 900, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -137,7 +138,7 @@ public class VentanaJuegoTriangulo extends JFrame {
     }
 
     private void establecerEtiqueta3() {
-         etiqueta3 = new JLabel("Aciertos: ");
+         etiqueta3 = new JLabel("Aciertos: "+ronda.getAciertos());
          etiqueta3.setBounds(270, 20, 243, 50);
          Color colorLetra = new Color(51, 51, 51);
          etiqueta3.setForeground(colorLetra);
@@ -250,6 +251,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                     etiqueta6.setIcon(listaDeImagenes.get(0));
                     if(widthImgPrincipal == listaDeImagenes.get(0).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(0).getIconHeight() ){
                         mouseListenerEt6();
+                   
                     }else{
                         
                     }
@@ -258,6 +260,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                     etiqueta7.setIcon(listaDeImagenes.get(1));
                     if(widthImgPrincipal == listaDeImagenes.get(1).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(1).getIconHeight() ){
                         mouseListenerEt7();
+                        
                     }else{
                         
                     }
@@ -266,6 +269,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                     etiqueta8.setIcon(listaDeImagenes.get(2));
                     if(widthImgPrincipal == listaDeImagenes.get(2).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(2).getIconHeight() ){
                         mouseListenerEt8();
+                        
                     }else{
                         
                     }
@@ -281,6 +285,7 @@ public class VentanaJuegoTriangulo extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
+                ronda.calcularAciertos();
                 // Cierra la ventana introduccion
                 dispose();
                 // Abre la ventana principal
@@ -295,6 +300,7 @@ public class VentanaJuegoTriangulo extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
+                ronda.calcularAciertos();
                 // Cierra la ventana introduccion
                 dispose();
                 // Abre la ventana principal
@@ -309,6 +315,7 @@ public class VentanaJuegoTriangulo extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
+                ronda.calcularAciertos();
                 // Cierra la ventana introduccion
                 dispose();
                 // Abre la ventana principal
