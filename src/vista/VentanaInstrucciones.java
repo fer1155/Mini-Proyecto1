@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import modelo.Persona;
+import modelo.Ronda;
 
 
 public class VentanaInstrucciones extends JFrame {
@@ -27,6 +28,7 @@ public class VentanaInstrucciones extends JFrame {
     private ImageIcon imagen2;
     private JButton boton1;
     private JButton boton2;
+    private Ronda ronda = new Ronda();
     
     public VentanaInstrucciones (Persona jugador){
         this.jugador = jugador;
@@ -110,11 +112,13 @@ public class VentanaInstrucciones extends JFrame {
         ActionListener oyenteDeAccion1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Cierra la ventana instrucciones
+                ronda.calcularRonda();
+                // Cierra la ventana principal
                 dispose();
                 // Abre la ventana juego
-                VentanaJuego ventanaJuego = new VentanaJuego(jugador);
+                VentanaJuegoTriangulo ventanaJuego = new VentanaJuegoTriangulo(jugador, ronda);
                 ventanaJuego.setVisible(true);
+                
             }
         };
         
