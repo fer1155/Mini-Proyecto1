@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.*;
 import modelo.Persona;
+import modelo.Ronda;
 
 public class VentanaPrincipal extends JFrame {
     private JLayeredPane layeredPane;
@@ -23,6 +24,7 @@ public class VentanaPrincipal extends JFrame {
     private JButton boton2;
     private ImageIcon imagen1;
     private ImageIcon imagen2;
+    private Ronda ronda = new Ronda();
     
     public VentanaPrincipal (Persona jugador){
         this.jugador = jugador;
@@ -85,10 +87,11 @@ public class VentanaPrincipal extends JFrame {
         ActionListener oyenteDeAccion1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ronda.calcularRonda();
                 // Cierra la ventana principal
                 dispose();
                 // Abre la ventana juego
-                VentanaJuegoTriangulo ventanaJuego = new VentanaJuegoTriangulo(jugador);
+                VentanaJuegoTriangulo ventanaJuego = new VentanaJuegoTriangulo(jugador, ronda);
                 ventanaJuego.setVisible(true);
             }
         };

@@ -22,7 +22,7 @@ import modelo.Persona;
 import modelo.Ronda;
 import java.util.Collections;
 
-public class VentanaJuegoCuadrado extends JFrame {
+public class VentanaJuegoCirculo extends JFrame {
     private JLayeredPane layeredPane;
     private JPanel panel;
     private Persona jugador;
@@ -41,7 +41,7 @@ public class VentanaJuegoCuadrado extends JFrame {
     private int widthImgPrincipal;
     private int heightImgPrincipal;
     
-    public VentanaJuegoCuadrado (Persona jugador, Ronda ronda){
+    public VentanaJuegoCirculo (Persona jugador, Ronda ronda){
         this.jugador = jugador;
         this.ronda = ronda;
         //this.setSize(900,600);
@@ -103,7 +103,7 @@ public class VentanaJuegoCuadrado extends JFrame {
     }
     
     private void establecerFigura1() {
-        ImageIcon figuraTriangulo = new ImageIcon("cuadrado.png");
+        ImageIcon figuraTriangulo = new ImageIcon("circulo.png");
         ImageIcon imgp1 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH));
         ImageIcon imgp2 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
         ImageIcon imgp3 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
@@ -206,7 +206,7 @@ public class VentanaJuegoCuadrado extends JFrame {
     }
 
     private void establecerFiguras() {
-        ImageIcon figuraTriangulo1 = new ImageIcon("cuadrado.png");
+        ImageIcon figuraTriangulo1 = new ImageIcon("circulo.png");
         
         ImageIcon img1 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH));
         ImageIcon img2 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
@@ -284,11 +284,11 @@ public class VentanaJuegoCuadrado extends JFrame {
             public void mouseClicked(MouseEvent e) {
                  ronda.calcularRonda();
                  ronda.calcularAciertos();
-                // Cierra la ronda cuadrado
+                // Cierra la ronda circulo
                 dispose();
-                // Abre la ronda circulo
-                VentanaJuegoCirculo ventanaCirculo = new VentanaJuegoCirculo(jugador, ronda);
-                ventanaCirculo.setVisible(true);
+                // Abre la ronda estrella
+                VentanaJuegoEstrella ventanaEstrella = new VentanaJuegoEstrella(jugador, ronda);
+                ventanaEstrella.setVisible(true);
             }
         });
     }
@@ -297,13 +297,13 @@ public class VentanaJuegoCuadrado extends JFrame {
         etiqueta7.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                  ronda.calcularRonda();
-                  ronda.calcularAciertos();
-                // Cierra la ronda cuadrado
+                ronda.calcularRonda();
+                ronda.calcularAciertos();
+                // Cierra la ronda circulo
                 dispose();
-                // Abre la ronda circulo
-                VentanaJuegoCirculo ventanaCirculo = new VentanaJuegoCirculo(jugador, ronda);
-                ventanaCirculo.setVisible(true);
+                // Abre la ronda estrella
+                VentanaJuegoEstrella ventanaEstrella = new VentanaJuegoEstrella(jugador, ronda);
+                ventanaEstrella.setVisible(true);
             }
         });
     }
@@ -312,13 +312,13 @@ public class VentanaJuegoCuadrado extends JFrame {
         etiqueta8.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                  ronda.calcularRonda();
-                  ronda.calcularAciertos();
-                // Cierra la ronda cuadrado
+                ronda.calcularRonda();
+                ronda.calcularAciertos();
+                // Cierra la ronda circulo
                 dispose();
-                // Abre la ronda circulo
-                VentanaJuegoCirculo ventanaCirculo = new VentanaJuegoCirculo(jugador, ronda);
-                ventanaCirculo.setVisible(true);
+                // Abre la ronda estrella
+                VentanaJuegoEstrella ventanaEstrella = new VentanaJuegoEstrella(jugador, ronda);
+                ventanaEstrella.setVisible(true);
             }
         });
     }
