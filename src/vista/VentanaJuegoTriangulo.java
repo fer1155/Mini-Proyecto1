@@ -19,15 +19,15 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import modelo.Persona;
+import modelo.Ronda;
 import java.util.Collections;
 
-public class VentanaJuego extends JFrame {
+public class VentanaJuegoTriangulo extends JFrame {
     private JLayeredPane layeredPane;
     private JPanel panel;
     private Persona jugador;
     private ImageIcon imagen;
     private JLabel etiqueta1;
-    private JButton boton1;
     private JLabel etiqueta2;
     private JLabel etiqueta3;
     private JLabel etiqueta4;
@@ -38,8 +38,9 @@ public class VentanaJuego extends JFrame {
     private JButton boton2;
     private int widthImgPrincipal;
     private int heightImgPrincipal;
+    private Ronda ronda = new Ronda();
     
-    public VentanaJuego (Persona jugador){
+    public VentanaJuegoTriangulo (Persona jugador){
         this.jugador = jugador;
         //this.setSize(900,600);
         this.setBounds(200, 50, 900, 600);
@@ -60,8 +61,6 @@ public class VentanaJuego extends JFrame {
         establecerEtiqueta4();
         establecerEtiqueta5();
         establecerBoton2();
-        
-        //establecerBoton1();
         System.out.println("El nombre es: " + jugador.getNombre());
     }
     
@@ -99,16 +98,6 @@ public class VentanaJuego extends JFrame {
         //Color colorBorde = new Color(7, 83, 176);
         //etiqueta1.setBorder(BorderFactory.createLineBorder(colorBorde,4,false));
         layeredPane.add(etiqueta1, JLayeredPane.PALETTE_LAYER);  
-    }
-    
-    private void establecerBoton1() {        
-        boton1 = new JButton(); 
-        boton1.setBounds(50, 450, 80, 80); 
-        ImageIcon imagen2 = new ImageIcon("triangulo.png");
-        boton1.setIcon(new ImageIcon(imagen2.getImage().getScaledInstance(boton1.getWidth(), boton1.getHeight(), Image.SCALE_SMOOTH)));
-        Color colorFondoBt = new Color(184, 245, 237);
-        boton1.setBackground(colorFondoBt);
-        layeredPane.add(boton1, JLayeredPane.PALETTE_LAYER);
     }
     
     private void establecerFigura1() {
@@ -176,7 +165,7 @@ public class VentanaJuego extends JFrame {
     }
 
     private void establecerEtiqueta5() {
-        etiqueta5 = new JLabel("Figura No: ");
+        etiqueta5 = new JLabel("Figura No: "+ ronda.getRonda());
         etiqueta5.setBounds(270, 490, 243, 50);
         Color colorLetra = new Color(51, 51, 51);
         etiqueta5.setForeground(colorLetra);
@@ -291,8 +280,12 @@ public class VentanaJuego extends JFrame {
         etiqueta6.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Aquí puedes realizar alguna acción cuando se hace clic en la imagen
-                System.out.println("HOlaaaaaaaa");
+                ronda.calcularRonda();
+                // Cierra la ventana introduccion
+                dispose();
+                // Abre la ventana principal
+                VentanaJuegoCuadrado ventanaCuadrado = new VentanaJuegoCuadrado(jugador, ronda);
+                ventanaCuadrado.setVisible(true);
             }
         });
     }
@@ -301,8 +294,12 @@ public class VentanaJuego extends JFrame {
         etiqueta7.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Aquí puedes realizar alguna acción cuando se hace clic en la imagen
-                System.out.println("HOlaaaaaaaa");
+                ronda.calcularRonda();
+                // Cierra la ventana introduccion
+                dispose();
+                // Abre la ventana principal
+                VentanaJuegoCuadrado ventanaCuadrado = new VentanaJuegoCuadrado(jugador, ronda);
+                ventanaCuadrado.setVisible(true);
             }
         });
     }
@@ -311,8 +308,12 @@ public class VentanaJuego extends JFrame {
         etiqueta8.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Aquí puedes realizar alguna acción cuando se hace clic en la imagen
-                System.out.println("HOlaaaaaaaa");
+                ronda.calcularRonda();
+                // Cierra la ventana introduccion
+                dispose();
+                // Abre la ventana principal
+                VentanaJuegoCuadrado ventanaCuadrado = new VentanaJuegoCuadrado(jugador, ronda);
+                ventanaCuadrado.setVisible(true);
             }
         });
     }
