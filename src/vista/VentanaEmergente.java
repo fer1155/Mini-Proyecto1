@@ -3,7 +3,10 @@ package vista;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -18,6 +21,9 @@ public class VentanaEmergente extends JFrame {
     private JPanel panel;
     private Persona jugador;
     private JLabel etiqueta1;
+    private JButton boton1;
+    private JButton boton2;
+    
     public VentanaEmergente (Persona jugador){
         this.jugador = jugador;
         //this.setSize(900,600);
@@ -32,7 +38,8 @@ public class VentanaEmergente extends JFrame {
         establecerLayeredPanel();
         establecerPanel();
         establecerEtiqueta();
-        
+        establecerBoton1();
+        establecerBoton2();
         System.out.println("El nombre es: " + jugador.getNombre());
     }
     
@@ -50,11 +57,11 @@ public class VentanaEmergente extends JFrame {
         layeredPane.add(panel, JLayeredPane.DEFAULT_LAYER);
     }
     
-     private void establecerEtiqueta() {
+    private void establecerEtiqueta() {
         etiqueta1 = new JLabel("<html>¿Estás seguro de finalizar el juego?</html>");
         etiqueta1.setBounds(65, 30, 350, 200);
-        //etiqueta1.setVerticalAlignment(SwingConstants.CENTER);
-        etiqueta1.setHorizontalAlignment(SwingConstants.CENTER);
+        etiqueta1.setVerticalAlignment(SwingConstants.TOP);
+        //etiqueta1.setHorizontalAlignment(SwingConstants.CENTER);
         etiqueta1.setOpaque(true); 
         Color colorFondo2 = new Color(215, 250, 245);
         etiqueta1.setBackground(colorFondo2);
@@ -62,13 +69,56 @@ public class VentanaEmergente extends JFrame {
         etiqueta1.setBorder(BorderFactory.createLineBorder(colorBorde,4,false));
         Color colorLetra = new Color(51, 51, 51);
         etiqueta1.setForeground(colorLetra);
-        etiqueta1.setFont(new Font("Centaur", 1, 30));
+        etiqueta1.setFont(new Font("Century Gothic", 0, 33));
         layeredPane.add(etiqueta1, JLayeredPane.PALETTE_LAYER);    
     }
     
-   
+    private void establecerBoton1() {
+        boton1 = new JButton("Volver");
+        boton1.setFocusPainted(false);
+        boton1.setBounds(90, 150, 130, 45); 
+        boton1.setForeground(Color.WHITE);
+        boton1.setFont(new Font("Kristen ITC", 0, 20));
+        Color colorFondoBtn = new Color(16, 113, 229);
+        boton1.setBackground(colorFondoBtn);
+        Color colorBorde = new Color(94, 94, 94);
+        boton1.setBorder(BorderFactory.createLineBorder(colorBorde,3,true));
+        layeredPane.add(boton1, JLayeredPane.MODAL_LAYER);
+        
+        ActionListener oyenteDeAccion1 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Cierra la ventana emergente
+                dispose();
+            }
+        };
+        
+        boton1.addActionListener(oyenteDeAccion1);
+    }
     
-    
-    
+    private void establecerBoton2() {
+        boton2 = new JButton("Finalizar");
+        boton2.setBounds(250, 150, 130, 45); 
+        boton2.setForeground(Color.WHITE);
+        boton2.setFont(new Font("Kristen ITC", 0, 20));
+        Color colorFondoBtn2 = new Color(16, 113, 229);
+        boton2.setBackground(colorFondoBtn2);
+        Color colorBorde2 = new Color(94, 94, 94);
+        boton2.setBorder(BorderFactory.createLineBorder(colorBorde2,3,true));
+        layeredPane.add(boton2, JLayeredPane.MODAL_LAYER);
+        
+        ActionListener oyenteDeAccion2 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Cierra la ventana emergente
+                dispose();
+                // Abre la ventana de instrucciones
+                VentanaEstadisticas ventanaEstadistcas = new VentanaEstadisticas(jugador);
+                ventanaEstadistcas.setVisible(true);
+            }
+        };
+        
+        boton2.addActionListener(oyenteDeAccion2);
+    }   
 }
 

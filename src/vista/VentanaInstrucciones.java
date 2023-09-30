@@ -113,7 +113,7 @@ public class VentanaInstrucciones extends JFrame {
                 // Cierra la ventana instrucciones
                 dispose();
                 // Abre la ventana juego
-                VentanaJuego ventanaJuego = new VentanaJuego(jugador);
+                VentanaJuegoTriangulo ventanaJuego = new VentanaJuegoTriangulo(jugador);
                 ventanaJuego.setVisible(true);
             }
         };

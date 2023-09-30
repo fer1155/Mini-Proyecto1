@@ -3,10 +3,13 @@ package vista;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,21 +19,28 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import modelo.Persona;
+import modelo.Ronda;
+import java.util.Collections;
 
-public class VentanaJuego extends JFrame {
+public class VentanaJuegoTriangulo extends JFrame {
     private JLayeredPane layeredPane;
     private JPanel panel;
     private Persona jugador;
     private ImageIcon imagen;
     private JLabel etiqueta1;
-    private JButton boton1;
     private JLabel etiqueta2;
     private JLabel etiqueta3;
     private JLabel etiqueta4;
     private JLabel etiqueta5;
+    private JLabel etiqueta6;
+    private JLabel etiqueta7;
+    private JLabel etiqueta8;
     private JButton boton2;
+    private int widthImgPrincipal;
+    private int heightImgPrincipal;
+    private Ronda ronda = new Ronda();
     
-    public VentanaJuego (Persona jugador){
+    public VentanaJuegoTriangulo (Persona jugador){
         this.jugador = jugador;
         //this.setSize(900,600);
         this.setBounds(200, 50, 900, 600);
@@ -46,12 +56,11 @@ public class VentanaJuego extends JFrame {
         establecerImagen();
         establecerEtiqueta1();
         establecerFigura1();
+        establecerFiguras();
         establecerEtiqueta3();
         establecerEtiqueta4();
         establecerEtiqueta5();
         establecerBoton2();
-        
-        //establecerBoton1();
         System.out.println("El nombre es: " + jugador.getNombre());
     }
     
@@ -91,22 +100,32 @@ public class VentanaJuego extends JFrame {
         layeredPane.add(etiqueta1, JLayeredPane.PALETTE_LAYER);  
     }
     
-    private void establecerBoton1() {        
-        boton1 = new JButton(); 
-        boton1.setBounds(50, 450, 80, 80); 
-        ImageIcon imagen2 = new ImageIcon("triangulo.png");
-        boton1.setIcon(new ImageIcon(imagen2.getImage().getScaledInstance(boton1.getWidth(), boton1.getHeight(), Image.SCALE_SMOOTH)));
-        Color colorFondoBt = new Color(184, 245, 237);
-        boton1.setBackground(colorFondoBt);
-        layeredPane.add(boton1, JLayeredPane.PALETTE_LAYER);
-    }
-    
     private void establecerFigura1() {
         ImageIcon figuraTriangulo = new ImageIcon("triangulo.png");
+        ImageIcon imgp1 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH));
+        ImageIcon imgp2 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
+        ImageIcon imgp3 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+              
         etiqueta2 = new JLabel();
-        etiqueta2.setBounds(50, 160, 110, 100); 
-        etiqueta2.setIcon(new ImageIcon(figuraTriangulo.getImage().getScaledInstance(etiqueta2.getWidth(), etiqueta2.getHeight(), Image.SCALE_SMOOTH)));
+        etiqueta2.setBounds(50, 180, 150, 150);
+        etiqueta2.setHorizontalAlignment(JLabel.CENTER);
+        etiqueta2.setVerticalAlignment(JLabel.CENTER);
         layeredPane.add(etiqueta2, JLayeredPane.PALETTE_LAYER);
+        
+        etiqueta2.setOpaque(true); 
+        etiqueta2.setBackground(Color.RED);
+        
+        ArrayList<ImageIcon> listaDeImagenes = new ArrayList<>();
+        listaDeImagenes.add(imgp1);
+        listaDeImagenes.add(imgp2);
+        listaDeImagenes.add(imgp3);
+
+        // Baraja la lista de imágenes
+        Collections.shuffle(listaDeImagenes);
+
+        etiqueta2.setIcon(listaDeImagenes.get(0));
+        widthImgPrincipal = listaDeImagenes.get(0).getIconWidth();
+        heightImgPrincipal = listaDeImagenes.get(0).getIconHeight();
         
         etiqueta2.addMouseListener(new MouseAdapter() {
             @Override
@@ -146,7 +165,7 @@ public class VentanaJuego extends JFrame {
     }
 
     private void establecerEtiqueta5() {
-        etiqueta5 = new JLabel("Figura No: ");
+        etiqueta5 = new JLabel("Figura No: "+ ronda.getRonda());
         etiqueta5.setBounds(270, 490, 243, 50);
         Color colorLetra = new Color(51, 51, 51);
         etiqueta5.setForeground(colorLetra);
@@ -174,7 +193,7 @@ public class VentanaJuego extends JFrame {
         ActionListener oyenteDeAccion1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+
                 // Abre la ventana emergente
                 VentanaEmergente ventanaEmergente = new VentanaEmergente(jugador);
                 ventanaEmergente.setVisible(true);
@@ -182,5 +201,120 @@ public class VentanaJuego extends JFrame {
         };
         
         boton2.addActionListener(oyenteDeAccion1);
+    }
+
+    private void establecerFiguras() {
+        ImageIcon figuraTriangulo1 = new ImageIcon("triangulo.png");
+        
+        ImageIcon img1 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH));
+        ImageIcon img2 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
+        ImageIcon img3 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+   
+        etiqueta6 = new JLabel();
+        etiqueta6.setBounds(310, 180, 150, 150);
+        etiqueta6.setHorizontalAlignment(JLabel.CENTER);
+        etiqueta6.setVerticalAlignment(JLabel.CENTER);
+        layeredPane.add(etiqueta6, JLayeredPane.PALETTE_LAYER);
+        etiqueta7 = new JLabel();
+        etiqueta7.setBounds(500, 180, 150, 150);
+        etiqueta7.setHorizontalAlignment(JLabel.CENTER);
+        etiqueta7.setVerticalAlignment(JLabel.CENTER);
+        layeredPane.add(etiqueta7, JLayeredPane.PALETTE_LAYER);
+        etiqueta8 = new JLabel();
+        etiqueta8.setBounds(680, 180, 150, 150);
+        etiqueta8.setHorizontalAlignment(JLabel.CENTER);
+        etiqueta8.setVerticalAlignment(JLabel.CENTER);
+        layeredPane.add(etiqueta8, JLayeredPane.PALETTE_LAYER);
+        
+        etiqueta6.setOpaque(true); 
+        etiqueta6.setBackground(Color.RED);
+        
+        etiqueta7.setOpaque(true); 
+        etiqueta7.setBackground(Color.BLUE);
+        
+        etiqueta8.setOpaque(true); 
+        etiqueta8.setBackground(Color.YELLOW);
+                
+        ArrayList<ImageIcon> listaDeImagenes = new ArrayList<>();
+        listaDeImagenes.add(img1);
+        listaDeImagenes.add(img2);
+        listaDeImagenes.add(img3);
+
+        // Baraja la lista de imágenes
+        Collections.shuffle(listaDeImagenes);
+
+        // Selecciona las tres primeras imágenes barajadas
+        for (int i = 0; i < 3; i++) {
+            switch (i) {
+                case 0:
+                    etiqueta6.setIcon(listaDeImagenes.get(0));
+                    if(widthImgPrincipal == listaDeImagenes.get(0).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(0).getIconHeight() ){
+                        mouseListenerEt6();
+                    }else{
+                        
+                    }
+                    break;
+                case 1:
+                    etiqueta7.setIcon(listaDeImagenes.get(1));
+                    if(widthImgPrincipal == listaDeImagenes.get(1).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(1).getIconHeight() ){
+                        mouseListenerEt7();
+                    }else{
+                        
+                    }
+                    break;
+                case 2:
+                    etiqueta8.setIcon(listaDeImagenes.get(2));
+                    if(widthImgPrincipal == listaDeImagenes.get(2).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(2).getIconHeight() ){
+                        mouseListenerEt8();
+                    }else{
+                        
+                    }
+                    break;
+            }
+        }
+        
+        
+    }
+    
+    public void mouseListenerEt6(){
+        etiqueta6.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ronda.calcularRonda();
+                // Cierra la ventana introduccion
+                dispose();
+                // Abre la ventana principal
+                VentanaJuegoCuadrado ventanaCuadrado = new VentanaJuegoCuadrado(jugador, ronda);
+                ventanaCuadrado.setVisible(true);
+            }
+        });
+    }
+    
+    public void mouseListenerEt7(){
+        etiqueta7.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ronda.calcularRonda();
+                // Cierra la ventana introduccion
+                dispose();
+                // Abre la ventana principal
+                VentanaJuegoCuadrado ventanaCuadrado = new VentanaJuegoCuadrado(jugador, ronda);
+                ventanaCuadrado.setVisible(true);
+            }
+        });
+    }
+    
+    public void mouseListenerEt8(){
+        etiqueta8.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ronda.calcularRonda();
+                // Cierra la ventana introduccion
+                dispose();
+                // Abre la ventana principal
+                VentanaJuegoCuadrado ventanaCuadrado = new VentanaJuegoCuadrado(jugador, ronda);
+                ventanaCuadrado.setVisible(true);
+            }
+        });
     }
 }

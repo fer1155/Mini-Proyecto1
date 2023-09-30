@@ -88,7 +88,7 @@ public class VentanaPrincipal extends JFrame {
                 // Cierra la ventana principal
                 dispose();
                 // Abre la ventana juego
-                VentanaJuego ventanaJuego = new VentanaJuego(jugador);
+                VentanaJuegoTriangulo ventanaJuego = new VentanaJuegoTriangulo(jugador);
                 ventanaJuego.setVisible(true);
             }
         };
