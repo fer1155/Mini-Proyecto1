@@ -29,7 +29,7 @@ public class VentanaEstadisticas extends JFrame {
     private JLabel etiqueta5;
     private ImageIcon imagen;
     private JButton boton;
-    
+    private JButton botonSalir;
     
     public VentanaEstadisticas (Persona jugador, Ronda ronda){
         this.jugador = jugador;
@@ -48,6 +48,7 @@ public class VentanaEstadisticas extends JFrame {
         establecerImagen();
         establecerEtiquetas();
         establecerBoton();
+        establecerBotonSalir();
     }
     
     private void establecerLayeredPanel() {
@@ -112,7 +113,7 @@ public class VentanaEstadisticas extends JFrame {
     private void establecerBoton() {
         boton = new JButton("Volver a jugar");
         boton.setFocusPainted(false);
-        boton.setBounds(350, 490, 165, 45); 
+        boton.setBounds(370, 475, 165, 45); 
         boton.setForeground(Color.WHITE);
         boton.setFont(new Font("Britannic Bold", 0, 22));
         Color colorFondoBtn2 = new Color(232, 19, 19);
@@ -131,5 +132,28 @@ public class VentanaEstadisticas extends JFrame {
             }
         };
         boton.addActionListener(oyenteDeAccion1);
+    }
+    
+    private void establecerBotonSalir() {
+        botonSalir = new JButton("Salir");
+        botonSalir.setFocusPainted(false);
+        botonSalir.setBounds(570, 475, 150, 45); 
+        botonSalir.setForeground(Color.WHITE);
+        botonSalir.setFont(new Font("Britannic Bold", 0, 22));
+        Color colorFondoBtn2 = new Color(232, 19, 19);
+        botonSalir.setBackground(colorFondoBtn2);
+        Color colorBorde = new Color(94, 94, 94);
+        botonSalir.setBorder(BorderFactory.createLineBorder(colorBorde,3,true));
+        layeredPane.add(botonSalir, JLayeredPane.MODAL_LAYER);
+        
+        ActionListener oyenteDeAccion1 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // Cierra todo
+                dispose();
+            }
+        };
+        botonSalir.addActionListener(oyenteDeAccion1);
     }
 }
