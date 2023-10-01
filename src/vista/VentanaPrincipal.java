@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.*;
 import modelo.Persona;
 import modelo.Ronda;
@@ -28,7 +27,6 @@ public class VentanaPrincipal extends JFrame {
     
     public VentanaPrincipal (Persona jugador){
         this.jugador = jugador;
-        //this.setSize(900,600);
         this.setBounds(200, 50, 900, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Tamaños");
@@ -44,7 +42,6 @@ public class VentanaPrincipal extends JFrame {
         establecerBoton2();
         establecerImagen1();
         establecerImagen2();
-        System.out.println("El nombre es: " + jugador.getNombre());
     }
     
     private void establecerLayeredPanel() {
@@ -95,7 +92,6 @@ public class VentanaPrincipal extends JFrame {
                 ventanaJuego.setVisible(true);
             }
         };
-        
         boton1.addActionListener(oyenteDeAccion1);
     }
     
@@ -119,7 +115,6 @@ public class VentanaPrincipal extends JFrame {
                 ventanaInstrucciones.setVisible(true);
             }
         };
-        
         boton2.addActionListener(oyenteDeAccion2);
     }
     
