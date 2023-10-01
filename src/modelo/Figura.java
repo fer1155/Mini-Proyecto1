@@ -49,7 +49,7 @@ public class Figura extends ImageIcon{
     //Genera un color aleatorio
     private void generarColorRandom(){
         Random random = new Random();
-        colorAleatorio = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+        colorAleatorio = new Color(random.nextInt(192), random.nextInt(192), random.nextInt(192));
     }
     
     //Método para cambiar el color de un ImageIcon
