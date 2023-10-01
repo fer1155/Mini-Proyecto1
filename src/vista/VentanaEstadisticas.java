@@ -3,8 +3,11 @@ package vista;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -25,6 +28,8 @@ public class VentanaEstadisticas extends JFrame {
     private JLabel etiqueta4;
     private JLabel etiqueta5;
     private ImageIcon imagen;
+    private JButton boton;
+    
     
     public VentanaEstadisticas (Persona jugador, Ronda ronda){
         this.jugador = jugador;
@@ -42,6 +47,7 @@ public class VentanaEstadisticas extends JFrame {
         establecerEtiqueta();
         establecerImagen();
         establecerEtiquetas();
+        establecerBoton();
     }
     
     private void establecerLayeredPanel() {
@@ -101,5 +107,29 @@ public class VentanaEstadisticas extends JFrame {
         etiqueta5.setBounds(145, 280,440, 50);
         etiqueta5.setFont(new Font("Centaur", 1, 35));
         layeredPane.add(etiqueta5, JLayeredPane.MODAL_LAYER);
+    }
+    
+    private void establecerBoton() {
+        boton = new JButton("Volver a jugar");
+        boton.setFocusPainted(false);
+        boton.setBounds(350, 490, 165, 45); 
+        boton.setForeground(Color.WHITE);
+        boton.setFont(new Font("Britannic Bold", 0, 22));
+        Color colorFondoBtn2 = new Color(232, 19, 19);
+        boton.setBackground(colorFondoBtn2);
+        Color colorBorde = new Color(94, 94, 94);
+        boton.setBorder(BorderFactory.createLineBorder(colorBorde,3,true));
+        layeredPane.add(boton, JLayeredPane.MODAL_LAYER);
+        
+        ActionListener oyenteDeAccion1 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // Abre la ventana de introducción
+                VentanaIntroduccion ventanaIntroduccion = new VentanaIntroduccion();
+                ventanaIntroduccion.setVisible(true);
+            }
+        };
+        boton.addActionListener(oyenteDeAccion1);
     }
 }
