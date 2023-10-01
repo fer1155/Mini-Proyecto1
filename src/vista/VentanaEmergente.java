@@ -15,18 +15,21 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import modelo.Persona;
+import modelo.Ronda;
 
 
 public class VentanaEmergente extends JFrame {
     private JLayeredPane layeredPane;
     private JPanel panel;
     private Persona jugador;
+    private Ronda ronda;
     private JLabel etiqueta1;
     private JButton boton1;
     private JButton boton2;
     
-    public VentanaEmergente (Persona jugador){
+    public VentanaEmergente (Persona jugador, Ronda ronda){
         this.jugador = jugador;
+        this.ronda = ronda;
         //this.setSize(900,600);
         this.setBounds(405, 195, 500, 320);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -115,7 +118,7 @@ public class VentanaEmergente extends JFrame {
                 //dispose();
                 cerrarTodasLasVentanas();
                 // Abre la ventana de instrucciones
-                VentanaEstadisticas ventanaEstadistcas = new VentanaEstadisticas(jugador);
+                VentanaEstadisticas ventanaEstadistcas = new VentanaEstadisticas(jugador, ronda);
                 ventanaEstadistcas.setVisible(true);
             }
         };
