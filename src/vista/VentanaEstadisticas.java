@@ -31,6 +31,7 @@ public class VentanaEstadisticas extends JFrame {
     private ImageIcon imagen;
     private JButton boton;
     private JButton botonSalir;
+    private JButton botonSecreto;
     
     public VentanaEstadisticas (Persona jugador, Ronda ronda){
         this.jugador = jugador;
@@ -50,6 +51,7 @@ public class VentanaEstadisticas extends JFrame {
         establecerEtiquetas();
         establecerBoton();
         establecerBotonSalir();
+        establecerBotonSecreto();
     }
     
     private void establecerLayeredPanel() {
@@ -162,5 +164,24 @@ public class VentanaEstadisticas extends JFrame {
             }
         };
         botonSalir.addActionListener(oyenteDeAccion1);
+    }
+    
+    private void establecerBotonSecreto(){
+        botonSecreto = new JButton();
+        boton.setFocusPainted(false);
+        botonSecreto.setBounds(300, 350, 100, 45); 
+        layeredPane.add(botonSecreto, JLayeredPane.PALETTE_LAYER);
+        
+        ActionListener oyenteDeAccion1 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // Abre la ventana de secreta
+                VentanaSecreta ventanaSecreta = new VentanaSecreta();
+                ventanaSecreta.setVisible(true);
+                
+            }
+        };
+        botonSecreto.addActionListener(oyenteDeAccion1);
     }
 }

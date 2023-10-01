@@ -327,7 +327,8 @@ public class VentanaJuegoTriangulo extends JFrame {
             }
         });
     }
-   private void reproducirSonido(String audio) {
+    
+    private void reproducirSonido(String audio) {
         try {
             // Carga el archivo de sonido (reemplaza "sonido.wav" con la ubicación de tu archivo de sonido)
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(audio));
