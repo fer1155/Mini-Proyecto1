@@ -152,7 +152,7 @@ public class VentanaJuegoTriangulo extends JFrame {
     }
 
     private void establecerEtiqueta4() {
-        etiqueta4 = new JLabel("Fallos: ");
+        etiqueta4 = new JLabel("Fallos: " + ronda.getFallos());
         etiqueta4.setBounds(720, 20, 243, 50);
         Color colorLetra = new Color(51, 51, 51);
         etiqueta4.setForeground(colorLetra);
@@ -196,7 +196,7 @@ public class VentanaJuegoTriangulo extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 // Abre la ventana emergente
-                VentanaEmergente ventanaEmergente = new VentanaEmergente(jugador);
+                VentanaEmergente ventanaEmergente = new VentanaEmergente(jugador, ronda);
                 ventanaEmergente.setVisible(true);
             }
         };
@@ -253,7 +253,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                         mouseListenerEt6();
                    
                     }else{
-                        
+                        mouseListenerEt6Fallo(); 
                     }
                     break;
                 case 1:
@@ -262,7 +262,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                         mouseListenerEt7();
                         
                     }else{
-                        
+                        mouseListenerEt7Fallo(); 
                     }
                     break;
                 case 2:
@@ -271,7 +271,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                         mouseListenerEt8();
                         
                     }else{
-                        
+                        mouseListenerEt8Fallo();
                     }
                     break;
             }
@@ -321,6 +321,36 @@ public class VentanaJuegoTriangulo extends JFrame {
                 // Abre la ventana principal
                 VentanaJuegoCuadrado ventanaCuadrado = new VentanaJuegoCuadrado(jugador, ronda);
                 ventanaCuadrado.setVisible(true);
+            }
+        });
+    }
+    
+    public void mouseListenerEt6Fallo(){
+        etiqueta6.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ronda.calcularFallos();
+                etiqueta4.setText("Fallos: " + ronda.getFallos());
+            }
+        });
+    }
+    
+    public void mouseListenerEt7Fallo(){
+        etiqueta7.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ronda.calcularFallos();
+                etiqueta4.setText("Fallos: " + ronda.getFallos());
+            }
+        });
+    }
+    
+    public void mouseListenerEt8Fallo(){
+        etiqueta8.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ronda.calcularFallos();
+                etiqueta4.setText("Fallos: " + ronda.getFallos());
             }
         });
     }

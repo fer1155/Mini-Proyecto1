@@ -12,16 +12,23 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import modelo.Persona;
+import modelo.Ronda;
 
 public class VentanaEstadisticas extends JFrame {
     private JLayeredPane layeredPane;
     private JPanel panel;
     private Persona jugador;
+    private Ronda ronda;
     private JLabel etiqueta;
+    private JLabel etiqueta2;
+    private JLabel etiqueta3;
+    private JLabel etiqueta4;
+    private JLabel etiqueta5;
     private ImageIcon imagen;
     
-    public VentanaEstadisticas (Persona jugador){
+    public VentanaEstadisticas (Persona jugador, Ronda ronda){
         this.jugador = jugador;
+        this.ronda = ronda;
         //this.setSize(900,600);
         this.setBounds(200, 50, 900, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -35,6 +42,7 @@ public class VentanaEstadisticas extends JFrame {
         establecerPanel();
         establecerEtiqueta();
         establecerImagen();
+        establecerEtiquetas();
     
         System.out.println("El nombre es: " + jugador.getNombre());
     }
@@ -73,6 +81,36 @@ public class VentanaEstadisticas extends JFrame {
         etiquetaImg.setBounds(40, 330, 340, 290);
         etiquetaImg.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(etiquetaImg.getWidth(), etiquetaImg.getHeight(), Image.SCALE_SMOOTH)));
         layeredPane.add(etiquetaImg, JLayeredPane.MODAL_LAYER);
+    }
+    
+    private void establecerEtiquetas() {
+        etiqueta2 = new JLabel("Estas fueron tus estadisticas: " );
+        etiqueta2.setBounds(145, 120,440, 50);
+        //etiqueta2.setOpaque(true); 
+        //etiqueta2.setBackground(Color.red);
+        etiqueta2.setFont(new Font("Centaur", 1, 35));
+        layeredPane.add(etiqueta2, JLayeredPane.MODAL_LAYER);
+        
+        etiqueta3 = new JLabel("Cantidad de figuras desplegadas: " + ronda.getRonda());
+        etiqueta3.setBounds(145, 180,500, 50);
+        //etiqueta3.setOpaque(true); 
+        //etiqueta3.setBackground(Color.red);
+        etiqueta3.setFont(new Font("Centaur", 1, 35));
+        layeredPane.add(etiqueta3, JLayeredPane.MODAL_LAYER);
+        
+        etiqueta4 = new JLabel("Cantidad de aciertos: " + ronda.getAciertos());
+        etiqueta4.setBounds(145, 230,440, 50);
+        //etiqueta4.setOpaque(true); 
+        //etiqueta4.setBackground(Color.red);
+        etiqueta4.setFont(new Font("Centaur", 1, 35));
+        layeredPane.add(etiqueta4, JLayeredPane.MODAL_LAYER);
+        
+        etiqueta5 = new JLabel("Cantidad de fallos: "+ ronda.getFallos() );
+        etiqueta5.setBounds(145, 280,440, 50);
+        //etiqueta5.setOpaque(true); 
+        //etiqueta5.setBackground(Color.red);
+        etiqueta5.setFont(new Font("Centaur", 1, 35));
+        layeredPane.add(etiqueta5, JLayeredPane.MODAL_LAYER);
     }
 
 }
