@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -19,6 +21,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import java.util.Collections;
+import javax.sound.sampled.*;
+
+
 
 public class VentanaJuegoTriangulo extends JFrame {
     private Ronda ronda;
@@ -40,6 +45,8 @@ public class VentanaJuegoTriangulo extends JFrame {
     private Color colorPrincipal;
     private Figura figuraPrincipal;
     private Figura figurasSecundarias;
+   
+    
     
     public VentanaJuegoTriangulo(Persona jugador, Ronda ronda){
         this.jugador = jugador;
@@ -233,6 +240,7 @@ public class VentanaJuegoTriangulo extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
                 ronda.calcularAciertos();
+                reproducirSonido("acierto.wav");
                 
                 // Abre la ventana cuadrado
                 VentanaJuegoCuadrado ventanaCuadrado = new VentanaJuegoCuadrado(jugador, ronda);
@@ -250,6 +258,7 @@ public class VentanaJuegoTriangulo extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
                 ronda.calcularAciertos();
+                reproducirSonido("acierto.wav");
                 
                 // Abre la ventana cuadrado
                 VentanaJuegoCuadrado ventanaCuadrado = new VentanaJuegoCuadrado(jugador, ronda);
@@ -267,6 +276,7 @@ public class VentanaJuegoTriangulo extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
                 ronda.calcularAciertos();
+                reproducirSonido("acierto.wav");
                 
                 // Abre la ventana cuadrado
                 VentanaJuegoCuadrado ventanaCuadrado = new VentanaJuegoCuadrado(jugador, ronda);
@@ -282,8 +292,12 @@ public class VentanaJuegoTriangulo extends JFrame {
         etiqueta6.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                reproducirSonido("fallo.wav");
                 ronda.calcularFallos();
                 etiqueta4.setText("Fallos: " + ronda.getFallos());
+                
+            
+                
             }
         });
     }
@@ -292,8 +306,11 @@ public class VentanaJuegoTriangulo extends JFrame {
         etiqueta7.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                reproducirSonido("fallo.wav");
                 ronda.calcularFallos();
                 etiqueta4.setText("Fallos: " + ronda.getFallos());
+                
+                
             }
         });
     }
@@ -302,9 +319,25 @@ public class VentanaJuegoTriangulo extends JFrame {
         etiqueta8.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                reproducirSonido("fallo.wav");
                 ronda.calcularFallos();
                 etiqueta4.setText("Fallos: " + ronda.getFallos());
+                
+                
             }
         });
+    }
+   private void reproducirSonido(String audio) {
+        try {
+            // Carga el archivo de sonido (reemplaza "sonido.wav" con la ubicación de tu archivo de sonido)
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(audio));
+            Clip clip = AudioSystem.getClip();
+
+            // Abre el clip y lo reproduce
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

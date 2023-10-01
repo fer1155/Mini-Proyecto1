@@ -135,6 +135,7 @@ public class VentanaEstadisticas extends JFrame {
                 // Abre la ventana de introducción
                 VentanaIntroduccion ventanaIntroduccion = new VentanaIntroduccion();
                 ventanaIntroduccion.setVisible(true);
+                dispose();
             }
         };
         boton.addActionListener(oyenteDeAccion1);
