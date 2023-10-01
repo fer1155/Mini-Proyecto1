@@ -1,17 +1,15 @@
 package vista;
-
-import java.awt.AlphaComposite;
+import modelo.Persona;
+import modelo.Ronda;
+import modelo.Figura;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,20 +18,15 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
-import modelo.Persona;
-import modelo.Ronda;
 import java.util.Collections;
-import java.awt.image.BufferedImage;
 
 public class VentanaJuegoRombo extends JFrame {
+    private Ronda ronda;
+    private Persona jugador;
     private JLayeredPane layeredPane;
     private JPanel panel;
-    private Persona jugador;
-    private Ronda ronda;
-    private Color colorPrincipal;
     private ImageIcon imagen;
     private JLabel etiqueta1;
-    private JButton boton1;
     private JLabel etiqueta2;
     private JLabel etiqueta3;
     private JLabel etiqueta4;
@@ -44,11 +37,13 @@ public class VentanaJuegoRombo extends JFrame {
     private JButton boton2;
     private int widthImgPrincipal;
     private int heightImgPrincipal;
+    private Color colorPrincipal;
+    private Figura figuraPrincipal;
+    private Figura figurasSecundarias;
     
-    public VentanaJuegoRombo (Persona jugador, Ronda ronda){
+    public VentanaJuegoRombo(Persona jugador, Ronda ronda){
         this.jugador = jugador;
         this.ronda = ronda;
-        //this.setSize(900,600);
         this.setBounds(200, 50, 900, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Tamaños");
@@ -57,7 +52,7 @@ public class VentanaJuegoRombo extends JFrame {
     }
     
     private void iniciarComponentes(){
-        establecerLayeredPanel();
+        establecerLayeredPanelBase();
         establecerPanel();
         establecerImagen();
         establecerEtiqueta1();
@@ -67,10 +62,9 @@ public class VentanaJuegoRombo extends JFrame {
         establecerEtiqueta4();
         establecerEtiqueta5();
         establecerBoton2();
-        System.out.println("El nombre es: " + jugador.getNombre());
     }
     
-    private void establecerLayeredPanel() {
+    private void establecerLayeredPanelBase() {
         layeredPane = new JLayeredPane();
         this.add(layeredPane);
     }
@@ -98,41 +92,22 @@ public class VentanaJuegoRombo extends JFrame {
         Color colorLetra = new Color(51, 51, 51);
         etiqueta1.setForeground(colorLetra);
         etiqueta1.setFont(new Font("Kristen ITC", 1, 20));
-        //etiqueta1.setOpaque(true); 
-        //Color colorFondo2 = new Color(215, 250, 245);
-        //etiqueta1.setBackground(colorFondo2);
-        //Color colorBorde = new Color(7, 83, 176);
-        //etiqueta1.setBorder(BorderFactory.createLineBorder(colorBorde,4,false));
         layeredPane.add(etiqueta1, JLayeredPane.PALETTE_LAYER);  
     }
     
     private void establecerFigura1() {
-        ImageIcon figuraTriangulo = new ImageIcon("rombo.png");
-        ImageIcon imgp1 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH));
-        ImageIcon imgp2 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
-        ImageIcon imgp3 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
-        
-        // Genera un color aleatorio
-        Random random = new Random();
-        Color colorAleatorio = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
-        
-        ImageIcon coloredIcon1 = cambiarColorIcon(imgp1, colorAleatorio);
-        ImageIcon coloredIcon2 = cambiarColorIcon(imgp2, colorAleatorio);
-        ImageIcon coloredIcon3 = cambiarColorIcon(imgp3,colorAleatorio);
-        
+        figuraPrincipal = new Figura("rombo.png");
+
         etiqueta2 = new JLabel();
         etiqueta2.setBounds(50, 180, 150, 150);
         etiqueta2.setHorizontalAlignment(JLabel.CENTER);
         etiqueta2.setVerticalAlignment(JLabel.CENTER);
         layeredPane.add(etiqueta2, JLayeredPane.PALETTE_LAYER);
         
-        etiqueta2.setOpaque(true); 
-        etiqueta2.setBackground(Color.WHITE);
-        
         ArrayList<ImageIcon> listaDeImagenes = new ArrayList<>();
-        listaDeImagenes.add(coloredIcon1);
-        listaDeImagenes.add(coloredIcon2);
-        listaDeImagenes.add(coloredIcon3);
+        listaDeImagenes.add(figuraPrincipal.getFiguraPequeñaConColorRandom());
+        listaDeImagenes.add(figuraPrincipal.getfiguraMedianaConColorRandom());
+        listaDeImagenes.add(figuraPrincipal.getfiguraGrandeConColorRandom());
 
         // Baraja la lista de imágenes
         Collections.shuffle(listaDeImagenes);
@@ -140,42 +115,24 @@ public class VentanaJuegoRombo extends JFrame {
         etiqueta2.setIcon(listaDeImagenes.get(0));
         widthImgPrincipal = listaDeImagenes.get(0).getIconWidth();
         heightImgPrincipal = listaDeImagenes.get(0).getIconHeight();
-        colorPrincipal  = colorAleatorio;
-        
-        etiqueta2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // Aquí puedes realizar alguna acción cuando se hace clic en la imagen
-                System.out.println("HOlaaaaaaaa");
-            }
-        });
+        colorPrincipal  = figuraPrincipal.getColorAleatorio();
     }
 
     private void establecerEtiqueta3() {
-         etiqueta3 = new JLabel("Aciertos: "+ronda.getAciertos());
+         etiqueta3 = new JLabel("Aciertos: " + ronda.getAciertos());
          etiqueta3.setBounds(270, 20, 243, 50);
          Color colorLetra = new Color(51, 51, 51);
          etiqueta3.setForeground(colorLetra);
          etiqueta3.setFont(new Font("Kristen ITC", 1, 20));
-         //etiqueta1.setOpaque(true); 
-         //Color colorFondo2 = new Color(215, 250, 245);
-         //etiqueta1.setBackground(colorFondo2);
-         //Color colorBorde = new Color(7, 83, 176);
-         //etiqueta1.setBorder(BorderFactory.createLineBorder(colorBorde,4,false));
          layeredPane.add(etiqueta3, JLayeredPane.PALETTE_LAYER);  
     }
 
     private void establecerEtiqueta4() {
-        etiqueta4 = new JLabel("Fallos: "+ ronda.getFallos());
+        etiqueta4 = new JLabel("Fallos: " + ronda.getFallos());
         etiqueta4.setBounds(720, 20, 243, 50);
         Color colorLetra = new Color(51, 51, 51);
         etiqueta4.setForeground(colorLetra);
         etiqueta4.setFont(new Font("Kristen ITC", 1, 20));
-        //etiqueta1.setOpaque(true); 
-        //Color colorFondo2 = new Color(215, 250, 245);
-        //etiqueta1.setBackground(colorFondo2);
-        //Color colorBorde = new Color(7, 83, 176);
-        //etiqueta1.setBorder(BorderFactory.createLineBorder(colorBorde,4,false));
         layeredPane.add(etiqueta4, JLayeredPane.PALETTE_LAYER);  
     }
 
@@ -185,11 +142,6 @@ public class VentanaJuegoRombo extends JFrame {
         Color colorLetra = new Color(51, 51, 51);
         etiqueta5.setForeground(colorLetra);
         etiqueta5.setFont(new Font("Kristen ITC", 1, 20));
-        //etiqueta1.setOpaque(true); 
-        //Color colorFondo2 = new Color(215, 250, 245);
-        //etiqueta1.setBackground(colorFondo2);
-        //Color colorBorde = new Color(7, 83, 176);
-        //etiqueta1.setBorder(BorderFactory.createLineBorder(colorBorde,4,false));
         layeredPane.add(etiqueta5, JLayeredPane.PALETTE_LAYER);  
     }
 
@@ -214,20 +166,11 @@ public class VentanaJuegoRombo extends JFrame {
                 ventanaEmergente.setVisible(true);
             }
         };
-        
         boton2.addActionListener(oyenteDeAccion1);
     }
 
     private void establecerFiguras() {
-        ImageIcon figuraTriangulo1 = new ImageIcon("rombo.png");
-        
-        ImageIcon img1 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH));
-        ImageIcon img2 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
-        ImageIcon img3 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
-   
-        ImageIcon coloredIconSecundario1 = cambiarColorIcon(img1, colorPrincipal);
-        ImageIcon coloredIconSecundario2 = cambiarColorIcon(img2, colorPrincipal);
-        ImageIcon coloredIconSecundario3 = cambiarColorIcon(img3,colorPrincipal);
+        figurasSecundarias = new Figura("rombo.png", colorPrincipal);
         
         etiqueta6 = new JLabel();
         etiqueta6.setBounds(310, 180, 150, 150);
@@ -244,33 +187,24 @@ public class VentanaJuegoRombo extends JFrame {
         etiqueta8.setHorizontalAlignment(JLabel.CENTER);
         etiqueta8.setVerticalAlignment(JLabel.CENTER);
         layeredPane.add(etiqueta8, JLayeredPane.PALETTE_LAYER);
-        
-        etiqueta6.setOpaque(true); 
-        etiqueta6.setBackground(Color.WHITE);
-        
-        etiqueta7.setOpaque(true); 
-        etiqueta7.setBackground(Color.BLUE);
-        
-        etiqueta8.setOpaque(true); 
-        etiqueta8.setBackground(Color.YELLOW);
                 
         ArrayList<ImageIcon> listaDeImagenes = new ArrayList<>();
-        listaDeImagenes.add(coloredIconSecundario1);
-        listaDeImagenes.add(coloredIconSecundario2);
-        listaDeImagenes.add(coloredIconSecundario3);
+        listaDeImagenes.add(figurasSecundarias.getFiguraPequeñaConColorRandom());
+        listaDeImagenes.add(figurasSecundarias.getfiguraMedianaConColorRandom());
+        listaDeImagenes.add(figurasSecundarias.getfiguraGrandeConColorRandom());
 
         // Baraja la lista de imágenes
         Collections.shuffle(listaDeImagenes);
 
         // Selecciona las tres primeras imágenes barajadas
-        for (int i = 0; i < 3; i++) {
-            switch (i) {
+        for(int i = 0; i < 3; i++){
+            switch(i){
                 case 0:
                     etiqueta6.setIcon(listaDeImagenes.get(0));
                     if(widthImgPrincipal == listaDeImagenes.get(0).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(0).getIconHeight() ){
                         mouseListenerEt6();
                     }else{
-                        mouseListenerEt6Fallo();
+                        mouseListenerEt6Fallo(); 
                     }
                     break;
                 case 1:
@@ -278,21 +212,19 @@ public class VentanaJuegoRombo extends JFrame {
                     if(widthImgPrincipal == listaDeImagenes.get(1).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(1).getIconHeight() ){
                         mouseListenerEt7();
                     }else{
-                        mouseListenerEt7Fallo();
+                        mouseListenerEt7Fallo(); 
                     }
                     break;
                 case 2:
                     etiqueta8.setIcon(listaDeImagenes.get(2));
                     if(widthImgPrincipal == listaDeImagenes.get(2).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(2).getIconHeight() ){
-                        mouseListenerEt8();
+                        mouseListenerEt8();  
                     }else{
                         mouseListenerEt8Fallo();
                     }
                     break;
             }
-        }
-        
-        
+        }  
     }
     
     public void mouseListenerEt6(){
@@ -301,11 +233,13 @@ public class VentanaJuegoRombo extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
                 ronda.calcularAciertos();
-                // Cierra la ronda rombo 
-                dispose();
-                // Abre la ronda triangulo
+                
+                // Abre la ventana Triangulo
                 VentanaJuegoTriangulo ventanaTriangulo = new VentanaJuegoTriangulo(jugador, ronda);
                 ventanaTriangulo.setVisible(true);
+                
+                // Cierra la ventana rombo
+                dispose();
             }
         });
     }
@@ -316,11 +250,13 @@ public class VentanaJuegoRombo extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
                 ronda.calcularAciertos();
-                // Cierra la ronda rombo 
-                dispose();
-                // Abre la ronda triangulo
+                
+                // Abre la ventana Triangulo
                 VentanaJuegoTriangulo ventanaTriangulo = new VentanaJuegoTriangulo(jugador, ronda);
                 ventanaTriangulo.setVisible(true);
+                
+                // Cierra la ventana rombo
+                dispose();
             }
         });
     }
@@ -331,11 +267,13 @@ public class VentanaJuegoRombo extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
                 ronda.calcularAciertos();
-                // Cierra la ronda rombo 
-                dispose();
-                // Abre la ronda triangulo
+                
+                // Abre la ventana Triangulo
                 VentanaJuegoTriangulo ventanaTriangulo = new VentanaJuegoTriangulo(jugador, ronda);
                 ventanaTriangulo.setVisible(true);
+                
+                // Cierra la ventana rombo
+                dispose();
             }
         });
     }
@@ -368,27 +306,5 @@ public class VentanaJuegoRombo extends JFrame {
                 etiqueta4.setText("Fallos: " + ronda.getFallos());
             }
         });
-    }
-    
-    // Método para cambiar el color de un ImageIcon
-    private static ImageIcon cambiarColorIcon(ImageIcon icon, Color color) {
-        int ancho = icon.getIconWidth();
-        int alto = icon.getIconHeight();
-        
-        BufferedImage imagen = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = imagen.createGraphics();
-        
-        // Dibuja la imagen original en el BufferedImage
-        icon.paintIcon(null, g, 0, 0);
-        
-        // Cambia el color de la imagen usando el color deseado
-        g.setColor(color);
-        g.setComposite(AlphaComposite.SrcAtop);
-        g.fillRect(0, 0, ancho, alto);
-        
-        // Crea un nuevo ImageIcon a partir del BufferedImage modificado
-        ImageIcon coloredIcon = new ImageIcon(imagen);
-        
-        return coloredIcon;
     }
 }

@@ -25,7 +25,6 @@ public class VentanaIntroduccion extends JFrame {
     private JButton boton1;
     
     public VentanaIntroduccion (){
-        //this.setSize(900,600);
         this.setBounds(200, 50, 900, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Tamaños");
