@@ -99,12 +99,12 @@ public class VentanaEstadisticas extends JFrame {
         etiqueta3.setFont(new Font("Centaur", 1, 35));
         layeredPane.add(etiqueta3, JLayeredPane.MODAL_LAYER);
         
-        etiqueta4 = new JLabel("Cantidad de aciertos: " + ronda.getAciertos());
+        etiqueta4 = new JLabel("Cantidad de aciertos: " + ronda.getAciertos()+" ("+ronda.calcularPorcentajeAciertos()+"%)");
         etiqueta4.setBounds(145, 230,440, 50);
         etiqueta4.setFont(new Font("Centaur", 1, 35));
         layeredPane.add(etiqueta4, JLayeredPane.MODAL_LAYER);
         
-        etiqueta5 = new JLabel("Cantidad de fallos: "+ ronda.getFallos() );
+        etiqueta5 = new JLabel("Cantidad de fallos: "+ ronda.getFallos()+" ("+ronda.calcularPorcentajeFallos()+"%)" );
         etiqueta5.setBounds(145, 280,440, 50);
         etiqueta5.setFont(new Font("Centaur", 1, 35));
         layeredPane.add(etiqueta5, JLayeredPane.MODAL_LAYER);
