@@ -1,7 +1,9 @@
 package vista;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.List;
 import java.awt.event.ActionEvent;
@@ -21,6 +23,7 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import modelo.Persona;
 import modelo.Ronda;
 import java.util.Collections;
+import java.awt.image.BufferedImage;
 
 public class VentanaJuegoTriangulo extends JFrame {
     private JLayeredPane layeredPane;
@@ -38,6 +41,7 @@ public class VentanaJuegoTriangulo extends JFrame {
     private JButton boton2;
     private int widthImgPrincipal;
     private int heightImgPrincipal;
+    private Color colorPrincipal;
     private Ronda ronda = new Ronda();
     
     public VentanaJuegoTriangulo (Persona jugador, Ronda ronda){
@@ -106,7 +110,15 @@ public class VentanaJuegoTriangulo extends JFrame {
         ImageIcon imgp1 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH));
         ImageIcon imgp2 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
         ImageIcon imgp3 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
-              
+        
+        // Genera un color aleatorio
+        Random random = new Random();
+        Color colorAleatorio = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+        
+        ImageIcon coloredIcon1 = cambiarColorIcon(imgp1, colorAleatorio);
+        ImageIcon coloredIcon2 = cambiarColorIcon(imgp2, colorAleatorio);
+        ImageIcon coloredIcon3 = cambiarColorIcon(imgp3,colorAleatorio);
+        
         etiqueta2 = new JLabel();
         etiqueta2.setBounds(50, 180, 150, 150);
         etiqueta2.setHorizontalAlignment(JLabel.CENTER);
@@ -117,9 +129,9 @@ public class VentanaJuegoTriangulo extends JFrame {
         etiqueta2.setBackground(Color.RED);
         
         ArrayList<ImageIcon> listaDeImagenes = new ArrayList<>();
-        listaDeImagenes.add(imgp1);
-        listaDeImagenes.add(imgp2);
-        listaDeImagenes.add(imgp3);
+        listaDeImagenes.add(coloredIcon1);
+        listaDeImagenes.add(coloredIcon2);
+        listaDeImagenes.add(coloredIcon3);
 
         // Baraja la lista de imágenes
         Collections.shuffle(listaDeImagenes);
@@ -127,6 +139,7 @@ public class VentanaJuegoTriangulo extends JFrame {
         etiqueta2.setIcon(listaDeImagenes.get(0));
         widthImgPrincipal = listaDeImagenes.get(0).getIconWidth();
         heightImgPrincipal = listaDeImagenes.get(0).getIconHeight();
+        colorPrincipal  = colorAleatorio;
         
         etiqueta2.addMouseListener(new MouseAdapter() {
             @Override
@@ -210,7 +223,11 @@ public class VentanaJuegoTriangulo extends JFrame {
         ImageIcon img1 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH));
         ImageIcon img2 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
         ImageIcon img3 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
-   
+        
+        ImageIcon coloredIconSecundario1 = cambiarColorIcon(img1, colorPrincipal);
+        ImageIcon coloredIconSecundario2 = cambiarColorIcon(img2, colorPrincipal);
+        ImageIcon coloredIconSecundario3 = cambiarColorIcon(img3,colorPrincipal);
+        
         etiqueta6 = new JLabel();
         etiqueta6.setBounds(310, 180, 150, 150);
         etiqueta6.setHorizontalAlignment(JLabel.CENTER);
@@ -237,9 +254,9 @@ public class VentanaJuegoTriangulo extends JFrame {
         etiqueta8.setBackground(Color.YELLOW);
                 
         ArrayList<ImageIcon> listaDeImagenes = new ArrayList<>();
-        listaDeImagenes.add(img1);
-        listaDeImagenes.add(img2);
-        listaDeImagenes.add(img3);
+        listaDeImagenes.add(coloredIconSecundario1);
+        listaDeImagenes.add(coloredIconSecundario2);
+        listaDeImagenes.add(coloredIconSecundario3);
 
         // Baraja la lista de imágenes
         Collections.shuffle(listaDeImagenes);
@@ -353,5 +370,27 @@ public class VentanaJuegoTriangulo extends JFrame {
                 etiqueta4.setText("Fallos: " + ronda.getFallos());
             }
         });
+    }
+    
+    // Método para cambiar el color de un ImageIcon
+    private static ImageIcon cambiarColorIcon(ImageIcon icon, Color color) {
+        int ancho = icon.getIconWidth();
+        int alto = icon.getIconHeight();
+        
+        BufferedImage imagen = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = imagen.createGraphics();
+        
+        // Dibuja la imagen original en el BufferedImage
+        icon.paintIcon(null, g, 0, 0);
+        
+        // Cambia el color de la imagen usando el color deseado
+        g.setColor(color);
+        g.setComposite(AlphaComposite.SrcAtop);
+        g.fillRect(0, 0, ancho, alto);
+        
+        // Crea un nuevo ImageIcon a partir del BufferedImage modificado
+        ImageIcon coloredIcon = new ImageIcon(imagen);
+        
+        return coloredIcon;
     }
 }
