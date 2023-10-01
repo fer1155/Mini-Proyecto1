@@ -1,15 +1,15 @@
 package vista;
-
+import modelo.Persona;
+import modelo.Ronda;
+import modelo.Figura;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,18 +18,15 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
-import modelo.Persona;
-import modelo.Ronda;
 import java.util.Collections;
 
 public class VentanaJuegoRectangulo extends JFrame {
+    private Ronda ronda;
+    private Persona jugador;
     private JLayeredPane layeredPane;
     private JPanel panel;
-    private Persona jugador;
-    private Ronda ronda;
     private ImageIcon imagen;
     private JLabel etiqueta1;
-    private JButton boton1;
     private JLabel etiqueta2;
     private JLabel etiqueta3;
     private JLabel etiqueta4;
@@ -40,11 +37,13 @@ public class VentanaJuegoRectangulo extends JFrame {
     private JButton boton2;
     private int widthImgPrincipal;
     private int heightImgPrincipal;
+    private Color colorPrincipal;
+    private Figura figuraPrincipal;
+    private Figura figurasSecundarias;
     
-    public VentanaJuegoRectangulo (Persona jugador, Ronda ronda){
+    public VentanaJuegoRectangulo(Persona jugador, Ronda ronda){
         this.jugador = jugador;
         this.ronda = ronda;
-        //this.setSize(900,600);
         this.setBounds(200, 50, 900, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Tamaños");
@@ -53,7 +52,7 @@ public class VentanaJuegoRectangulo extends JFrame {
     }
     
     private void iniciarComponentes(){
-        establecerLayeredPanel();
+        establecerLayeredPanelBase();
         establecerPanel();
         establecerImagen();
         establecerEtiqueta1();
@@ -63,10 +62,9 @@ public class VentanaJuegoRectangulo extends JFrame {
         establecerEtiqueta4();
         establecerEtiqueta5();
         establecerBoton2();
-        System.out.println("El nombre es: " + jugador.getNombre());
     }
     
-    private void establecerLayeredPanel() {
+    private void establecerLayeredPanelBase() {
         layeredPane = new JLayeredPane();
         this.add(layeredPane);
     }
@@ -94,33 +92,22 @@ public class VentanaJuegoRectangulo extends JFrame {
         Color colorLetra = new Color(51, 51, 51);
         etiqueta1.setForeground(colorLetra);
         etiqueta1.setFont(new Font("Kristen ITC", 1, 20));
-        //etiqueta1.setOpaque(true); 
-        //Color colorFondo2 = new Color(215, 250, 245);
-        //etiqueta1.setBackground(colorFondo2);
-        //Color colorBorde = new Color(7, 83, 176);
-        //etiqueta1.setBorder(BorderFactory.createLineBorder(colorBorde,4,false));
         layeredPane.add(etiqueta1, JLayeredPane.PALETTE_LAYER);  
     }
     
     private void establecerFigura1() {
-        ImageIcon figuraTriangulo = new ImageIcon("rectangulo.png");
-        ImageIcon imgp1 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH));
-        ImageIcon imgp2 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
-        ImageIcon imgp3 = new ImageIcon(figuraTriangulo.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
-              
+        figuraPrincipal = new Figura("rectangulo.png");
+
         etiqueta2 = new JLabel();
         etiqueta2.setBounds(50, 180, 150, 150);
         etiqueta2.setHorizontalAlignment(JLabel.CENTER);
         etiqueta2.setVerticalAlignment(JLabel.CENTER);
         layeredPane.add(etiqueta2, JLayeredPane.PALETTE_LAYER);
         
-        etiqueta2.setOpaque(true); 
-        etiqueta2.setBackground(Color.WHITE);
-        
         ArrayList<ImageIcon> listaDeImagenes = new ArrayList<>();
-        listaDeImagenes.add(imgp1);
-        listaDeImagenes.add(imgp2);
-        listaDeImagenes.add(imgp3);
+        listaDeImagenes.add(figuraPrincipal.getFiguraPequeñaConColorRandom());
+        listaDeImagenes.add(figuraPrincipal.getfiguraMedianaConColorRandom());
+        listaDeImagenes.add(figuraPrincipal.getfiguraGrandeConColorRandom());
 
         // Baraja la lista de imágenes
         Collections.shuffle(listaDeImagenes);
@@ -128,41 +115,24 @@ public class VentanaJuegoRectangulo extends JFrame {
         etiqueta2.setIcon(listaDeImagenes.get(0));
         widthImgPrincipal = listaDeImagenes.get(0).getIconWidth();
         heightImgPrincipal = listaDeImagenes.get(0).getIconHeight();
-        
-        etiqueta2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // Aquí puedes realizar alguna acción cuando se hace clic en la imagen
-                System.out.println("HOlaaaaaaaa");
-            }
-        });
+        colorPrincipal  = figuraPrincipal.getColorAleatorio();
     }
 
     private void establecerEtiqueta3() {
-         etiqueta3 = new JLabel("Aciertos: "+ ronda.getAciertos());
+         etiqueta3 = new JLabel("Aciertos: " + ronda.getAciertos());
          etiqueta3.setBounds(270, 20, 243, 50);
          Color colorLetra = new Color(51, 51, 51);
          etiqueta3.setForeground(colorLetra);
          etiqueta3.setFont(new Font("Kristen ITC", 1, 20));
-         //etiqueta1.setOpaque(true); 
-         //Color colorFondo2 = new Color(215, 250, 245);
-         //etiqueta1.setBackground(colorFondo2);
-         //Color colorBorde = new Color(7, 83, 176);
-         //etiqueta1.setBorder(BorderFactory.createLineBorder(colorBorde,4,false));
          layeredPane.add(etiqueta3, JLayeredPane.PALETTE_LAYER);  
     }
 
     private void establecerEtiqueta4() {
-        etiqueta4 = new JLabel("Fallos: ");
+        etiqueta4 = new JLabel("Fallos: " + ronda.getFallos());
         etiqueta4.setBounds(720, 20, 243, 50);
         Color colorLetra = new Color(51, 51, 51);
         etiqueta4.setForeground(colorLetra);
         etiqueta4.setFont(new Font("Kristen ITC", 1, 20));
-        //etiqueta1.setOpaque(true); 
-        //Color colorFondo2 = new Color(215, 250, 245);
-        //etiqueta1.setBackground(colorFondo2);
-        //Color colorBorde = new Color(7, 83, 176);
-        //etiqueta1.setBorder(BorderFactory.createLineBorder(colorBorde,4,false));
         layeredPane.add(etiqueta4, JLayeredPane.PALETTE_LAYER);  
     }
 
@@ -172,11 +142,6 @@ public class VentanaJuegoRectangulo extends JFrame {
         Color colorLetra = new Color(51, 51, 51);
         etiqueta5.setForeground(colorLetra);
         etiqueta5.setFont(new Font("Kristen ITC", 1, 20));
-        //etiqueta1.setOpaque(true); 
-        //Color colorFondo2 = new Color(215, 250, 245);
-        //etiqueta1.setBackground(colorFondo2);
-        //Color colorBorde = new Color(7, 83, 176);
-        //etiqueta1.setBorder(BorderFactory.createLineBorder(colorBorde,4,false));
         layeredPane.add(etiqueta5, JLayeredPane.PALETTE_LAYER);  
     }
 
@@ -197,21 +162,16 @@ public class VentanaJuegoRectangulo extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 // Abre la ventana emergente
-                VentanaEmergente ventanaEmergente = new VentanaEmergente(jugador);
+                VentanaEmergente ventanaEmergente = new VentanaEmergente(jugador, ronda);
                 ventanaEmergente.setVisible(true);
             }
         };
-        
         boton2.addActionListener(oyenteDeAccion1);
     }
 
     private void establecerFiguras() {
-        ImageIcon figuraTriangulo1 = new ImageIcon("rectangulo.png");
+        figurasSecundarias = new Figura("rectangulo.png", colorPrincipal);
         
-        ImageIcon img1 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH));
-        ImageIcon img2 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
-        ImageIcon img3 = new ImageIcon(figuraTriangulo1.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
-   
         etiqueta6 = new JLabel();
         etiqueta6.setBounds(310, 180, 150, 150);
         etiqueta6.setHorizontalAlignment(JLabel.CENTER);
@@ -227,33 +187,24 @@ public class VentanaJuegoRectangulo extends JFrame {
         etiqueta8.setHorizontalAlignment(JLabel.CENTER);
         etiqueta8.setVerticalAlignment(JLabel.CENTER);
         layeredPane.add(etiqueta8, JLayeredPane.PALETTE_LAYER);
-        
-        etiqueta6.setOpaque(true); 
-        etiqueta6.setBackground(Color.WHITE);
-        
-        etiqueta7.setOpaque(true); 
-        etiqueta7.setBackground(Color.BLUE);
-        
-        etiqueta8.setOpaque(true); 
-        etiqueta8.setBackground(Color.YELLOW);
                 
         ArrayList<ImageIcon> listaDeImagenes = new ArrayList<>();
-        listaDeImagenes.add(img1);
-        listaDeImagenes.add(img2);
-        listaDeImagenes.add(img3);
+        listaDeImagenes.add(figurasSecundarias.getFiguraPequeñaConColorRandom());
+        listaDeImagenes.add(figurasSecundarias.getfiguraMedianaConColorRandom());
+        listaDeImagenes.add(figurasSecundarias.getfiguraGrandeConColorRandom());
 
         // Baraja la lista de imágenes
         Collections.shuffle(listaDeImagenes);
 
         // Selecciona las tres primeras imágenes barajadas
-        for (int i = 0; i < 3; i++) {
-            switch (i) {
+        for(int i = 0; i < 3; i++){
+            switch(i){
                 case 0:
                     etiqueta6.setIcon(listaDeImagenes.get(0));
                     if(widthImgPrincipal == listaDeImagenes.get(0).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(0).getIconHeight() ){
                         mouseListenerEt6();
                     }else{
-                        
+                        mouseListenerEt6Fallo(); 
                     }
                     break;
                 case 1:
@@ -261,21 +212,19 @@ public class VentanaJuegoRectangulo extends JFrame {
                     if(widthImgPrincipal == listaDeImagenes.get(1).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(1).getIconHeight() ){
                         mouseListenerEt7();
                     }else{
-                        
+                        mouseListenerEt7Fallo(); 
                     }
                     break;
                 case 2:
                     etiqueta8.setIcon(listaDeImagenes.get(2));
                     if(widthImgPrincipal == listaDeImagenes.get(2).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(2).getIconHeight() ){
-                        mouseListenerEt8();
+                        mouseListenerEt8();  
                     }else{
-                        
+                        mouseListenerEt8Fallo();
                     }
                     break;
             }
-        }
-        
-        
+        }  
     }
     
     public void mouseListenerEt6(){
@@ -284,11 +233,13 @@ public class VentanaJuegoRectangulo extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
                 ronda.calcularAciertos();
-                // Cierra la ronda rectangulo
-                dispose();
-                // Abre la ronda Rombo
+                
+                // Abre la ventanarombo
                 VentanaJuegoRombo ventanaRombo = new VentanaJuegoRombo(jugador, ronda);
                 ventanaRombo.setVisible(true);
+                
+                // Cierra la ventana rectangulo
+                dispose();
             }
         });
     }
@@ -299,11 +250,13 @@ public class VentanaJuegoRectangulo extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
                 ronda.calcularAciertos();
-                // Cierra la ronda rectangulo
-                dispose();
-                // Abre la ronda Rombo
+                
+                // Abre la ventanarombo
                 VentanaJuegoRombo ventanaRombo = new VentanaJuegoRombo(jugador, ronda);
                 ventanaRombo.setVisible(true);
+                
+                // Cierra la ventana rectangulo
+                dispose();
             }
         });
     }
@@ -314,11 +267,43 @@ public class VentanaJuegoRectangulo extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 ronda.calcularRonda();
                 ronda.calcularAciertos();
-                // Cierra la ronda rectangulo
-                dispose();
-                // Abre la ronda Rombo
+                
+                // Abre la ventanarombo
                 VentanaJuegoRombo ventanaRombo = new VentanaJuegoRombo(jugador, ronda);
                 ventanaRombo.setVisible(true);
+                
+                // Cierra la ventana rectangulo
+                dispose();
+            }
+        });
+    }
+    
+    public void mouseListenerEt6Fallo(){
+        etiqueta6.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ronda.calcularFallos();
+                etiqueta4.setText("Fallos: " + ronda.getFallos());
+            }
+        });
+    }
+    
+    public void mouseListenerEt7Fallo(){
+        etiqueta7.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ronda.calcularFallos();
+                etiqueta4.setText("Fallos: " + ronda.getFallos());
+            }
+        });
+    }
+    
+    public void mouseListenerEt8Fallo(){
+        etiqueta8.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ronda.calcularFallos();
+                etiqueta4.setText("Fallos: " + ronda.getFallos());
             }
         });
     }

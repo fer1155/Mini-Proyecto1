@@ -1,4 +1,3 @@
-
 package vista;
 
 import java.awt.Color;
@@ -13,23 +12,23 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import modelo.Persona;
+import modelo.Ronda;
 
 
 public class VentanaEmergente extends JFrame {
     private JLayeredPane layeredPane;
     private JPanel panel;
     private Persona jugador;
+    private Ronda ronda;
     private JLabel etiqueta1;
     private JButton boton1;
     private JButton boton2;
     
-    public VentanaEmergente (Persona jugador){
+    public VentanaEmergente (Persona jugador, Ronda ronda){
         this.jugador = jugador;
-        //this.setSize(900,600);
+        this.ronda = ronda;
         this.setBounds(405, 195, 500, 320);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Tamaños");
         setResizable(false);
         iniciarComponentes();
@@ -41,7 +40,6 @@ public class VentanaEmergente extends JFrame {
         establecerEtiqueta();
         establecerBoton1();
         establecerBoton2();
-        System.out.println("El nombre es: " + jugador.getNombre());
     }
     
     private void establecerLayeredPanel() {
@@ -62,7 +60,6 @@ public class VentanaEmergente extends JFrame {
         etiqueta1 = new JLabel("<html>¿Estás seguro de finalizar el juego?</html>");
         etiqueta1.setBounds(95, 30, 285, 200);
         etiqueta1.setVerticalAlignment(SwingConstants.TOP);
-        //etiqueta1.setHorizontalAlignment(SwingConstants.CENTER);
         etiqueta1.setOpaque(true); 
         Color colorFondo2 = new Color(215, 250, 245);
         etiqueta1.setBackground(colorFondo2);
@@ -93,7 +90,6 @@ public class VentanaEmergente extends JFrame {
                 dispose();
             }
         };
-        
         boton1.addActionListener(oyenteDeAccion1);
     }
     
@@ -111,21 +107,21 @@ public class VentanaEmergente extends JFrame {
         ActionListener oyenteDeAccion2 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Cierra la ventana emergente
-                //dispose();
+                // Cierra todas las ventanas
                 cerrarTodasLasVentanas();
+                
                 // Abre la ventana de instrucciones
-                VentanaEstadisticas ventanaEstadistcas = new VentanaEstadisticas(jugador);
+                VentanaEstadisticas ventanaEstadistcas = new VentanaEstadisticas(jugador, ronda);
                 ventanaEstadistcas.setVisible(true);
             }
         };
-        
         boton2.addActionListener(oyenteDeAccion2);
-    }   
-   public static void cerrarTodasLasVentanas() {
+    } 
+    
+    public static void cerrarTodasLasVentanas() {
         Window[] windows = Window.getWindows();
-        for (Window ventana : windows) {
-            if (ventana instanceof JFrame) {
+        for(Window ventana : windows) {
+            if(ventana instanceof JFrame) {
                 ventana.dispose();
             }
         }
