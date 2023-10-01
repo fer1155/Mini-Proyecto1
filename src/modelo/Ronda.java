@@ -50,12 +50,22 @@ public class Ronda {
     }   
     
     public int calcularPorcentajeAciertos (){
-        porcentajeAciertos = (aciertos * 100 )/getIntentos();
+        if (getIntentos()!=0){
+            porcentajeAciertos = (aciertos * 100 )/getIntentos();
+        }else {
+            porcentajeAciertos = 0;
+        }
+        
         return porcentajeAciertos;
     }
     
     public int calcularPorcentajeFallos (){
-        porcentajeFallos = (fallos * 100 )/getIntentos();
+        if (getIntentos()!=0){
+            porcentajeFallos = (fallos * 100 )/getIntentos();
+        }else {
+            porcentajeFallos = 0;
+        }
+ 
         return porcentajeFallos;
     }
 }

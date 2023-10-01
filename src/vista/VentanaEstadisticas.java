@@ -27,6 +27,7 @@ public class VentanaEstadisticas extends JFrame {
     private JLabel etiqueta3;
     private JLabel etiqueta4;
     private JLabel etiqueta5;
+    private JLabel etiqueta6;
     private ImageIcon imagen;
     private JButton boton;
     private JButton botonSalir;
@@ -76,7 +77,7 @@ public class VentanaEstadisticas extends JFrame {
         etiqueta.setBorder(BorderFactory.createLineBorder(colorBorde,4,false));
         Color colorLetra = new Color(51, 51, 51);
         etiqueta.setForeground(colorLetra);
-        etiqueta.setFont(new Font("Centaur", 1, 35));
+        etiqueta.setFont(new Font("Bell MT", 1, 32));
         layeredPane.add(etiqueta, JLayeredPane.PALETTE_LAYER);    
     }
 
@@ -90,24 +91,29 @@ public class VentanaEstadisticas extends JFrame {
     
     private void establecerEtiquetas() {
         etiqueta2 = new JLabel("Estas fueron tus estadisticas: " );
-        etiqueta2.setBounds(145, 120,440, 50);
-        etiqueta2.setFont(new Font("Centaur", 1, 35));
+        etiqueta2.setBounds(145, 110,440, 50);
+        etiqueta2.setFont(new Font("Bell MT", 1, 32));
         layeredPane.add(etiqueta2, JLayeredPane.MODAL_LAYER);
         
         etiqueta3 = new JLabel("Cantidad de figuras desplegadas: " + ronda.getRonda());
-        etiqueta3.setBounds(145, 180,500, 50);
-        etiqueta3.setFont(new Font("Centaur", 1, 35));
+        etiqueta3.setBounds(145, 155,550, 50);
+        etiqueta3.setFont(new Font("Bell MT", 1, 32));
         layeredPane.add(etiqueta3, JLayeredPane.MODAL_LAYER);
         
         etiqueta4 = new JLabel("Cantidad de aciertos: " + ronda.getAciertos()+" ("+ronda.calcularPorcentajeAciertos()+"%)");
-        etiqueta4.setBounds(145, 230,440, 50);
-        etiqueta4.setFont(new Font("Centaur", 1, 35));
+        etiqueta4.setBounds(145, 240,440, 50);
+        etiqueta4.setFont(new Font("Bell MT", 1, 32));
         layeredPane.add(etiqueta4, JLayeredPane.MODAL_LAYER);
         
         etiqueta5 = new JLabel("Cantidad de fallos: "+ ronda.getFallos()+" ("+ronda.calcularPorcentajeFallos()+"%)" );
-        etiqueta5.setBounds(145, 280,440, 50);
-        etiqueta5.setFont(new Font("Centaur", 1, 35));
+        etiqueta5.setBounds(145, 290,440, 50);
+        etiqueta5.setFont(new Font("Bell MT", 1, 32));
         layeredPane.add(etiqueta5, JLayeredPane.MODAL_LAYER);
+        
+        etiqueta6 = new JLabel("Numero de intentos: " + ronda.getIntentos());
+        etiqueta6.setBounds(145, 197,500, 50);
+        etiqueta6.setFont(new Font("Bell MT", 1, 32));
+        layeredPane.add(etiqueta6, JLayeredPane.MODAL_LAYER);
     }
     
     private void establecerBoton() {
