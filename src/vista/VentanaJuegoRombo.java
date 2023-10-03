@@ -193,6 +193,7 @@ public class VentanaJuegoRombo extends JFrame {
                 // Abre la ventana emergente
                 VentanaEmergente ventanaEmergente = new VentanaEmergente(jugador, ronda);
                 ventanaEmergente.setVisible(true);
+                reproducirSonido("click.wav");
             }
         };
         boton2.addActionListener(oyenteDeAccion1);

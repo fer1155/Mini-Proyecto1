@@ -188,7 +188,7 @@ public class VentanaJuegoTriangulo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Reproduce un sonido al presionar el boton
-                reproducirSonido("boton.wav");
+                reproducirSonido("click.wav");
                 
                 // Abre la ventana emergente
                 VentanaEmergente ventanaEmergente = new VentanaEmergente(jugador, ronda);
