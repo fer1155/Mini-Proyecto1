@@ -130,7 +130,7 @@ public class VentanaEmergente extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Reproduce un sonido al presionar el boton
-                reproducirSonido("boton.wav");
+                reproducirSonido("click.wav");
                 
                 // Cierra todas las ventanas
                 cerrarTodasLasVentanas();
