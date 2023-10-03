@@ -353,7 +353,7 @@ public class VentanaJuegoCirculo extends JFrame {
                 //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
                 
-                //Aumenta el numero de aciertos
+                //Aumenta el numero de fallos
                 ronda.calcularFallos();
                 
                 //Cambia el numero de fallos
@@ -370,7 +370,7 @@ public class VentanaJuegoCirculo extends JFrame {
                 //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
                 
-                //Aumenta el numero de aciertos
+                //Aumenta el numero de fallos
                 ronda.calcularFallos();
                 
                 //Cambia el numero de fallos
@@ -387,7 +387,7 @@ public class VentanaJuegoCirculo extends JFrame {
                 //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
                 
-                //Aumenta el numero de aciertos
+                //Aumenta el numero de fallos
                 ronda.calcularFallos();
                 
                 //Cambia el numero de fallos

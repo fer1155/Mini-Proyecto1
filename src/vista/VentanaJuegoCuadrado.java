@@ -223,13 +223,13 @@ public class VentanaJuegoCuadrado extends JFrame {
         etiqueta8.setVerticalAlignment(JLabel.CENTER);
         layeredPane.add(etiqueta8, JLayeredPane.PALETTE_LAYER);
         
-        //Se crean las etiquetas fijas donde iran posicionadas las tres figuras con distintos tamaños        
+        //Se crean las etiquetas fijas donde iran posicionadas las tres figuras con dist//Se crean las etiquetas fijas donde iran posicionadas las tres figuras con dintos tamaños        
         ArrayList<ImageIcon> listaDeImagenes = new ArrayList<>();
         listaDeImagenes.add(figurasSecundarias.getFiguraPequeñaConColorRandom());
         listaDeImagenes.add(figurasSecundarias.getfiguraMedianaConColorRandom());
         listaDeImagenes.add(figurasSecundarias.getfiguraGrandeConColorRandom());
 
-        ////Baraja la lista de imágenes para cambiar su orden
+        //Baraja la lista de imágenes para cambiar su orden
         Collections.shuffle(listaDeImagenes);
 
         // Selecciona las tres primeras imágenes barajadas
@@ -354,7 +354,7 @@ public class VentanaJuegoCuadrado extends JFrame {
                 //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
                 
-                //Aumenta el numero de aciertos
+                //Aumenta el numero de fallos
                 ronda.calcularFallos();
                 
                 //Cambia el numero de fallos
@@ -371,7 +371,7 @@ public class VentanaJuegoCuadrado extends JFrame {
                 //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
                 
-                //Aumenta el numero de aciertos
+                //Aumenta el numero de fallos
                 ronda.calcularFallos();
                 
                 //Cambia el numero de fallos
@@ -388,7 +388,7 @@ public class VentanaJuegoCuadrado extends JFrame {
                 //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
                 
-                //Aumenta el numero de aciertos
+                //Aumenta el numero de fallos
                 ronda.calcularFallos();
                 
                 //Cambia el numero de fallos
