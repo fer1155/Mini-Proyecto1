@@ -161,7 +161,7 @@ public class VentanaJuegoCirculo extends JFrame {
         layeredPane.add(etiqueta4, JLayeredPane.PALETTE_LAYER);  
     }
     
-    //Establece label del numero de la rona
+    //Establece label del numero de la ronda
     private void establecerEtiqueta5() {
         etiqueta5 = new JLabel("Figura No: " + ronda.getRonda());
         etiqueta5.setBounds(270, 490, 243, 50);
