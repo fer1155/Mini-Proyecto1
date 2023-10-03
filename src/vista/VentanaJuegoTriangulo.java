@@ -115,22 +115,26 @@ public class VentanaJuegoTriangulo extends JFrame {
     
     //Establece figura de la parte izquierda
     private void establecerFigura1() {
+        //Se crea un objeto figura que proporcionara la misma figura con tres tamaños distintios (grande, mediano, pequeño)
         figuraPrincipal = new Figura("triangulo.png");
 
+        //Se crea la etiquetas fija donde iran posicionadas una de las tres figuras con distintos tamaños
         etiqueta2 = new JLabel();
         etiqueta2.setBounds(50, 180, 150, 150);
         etiqueta2.setHorizontalAlignment(JLabel.CENTER);
         etiqueta2.setVerticalAlignment(JLabel.CENTER);
         layeredPane.add(etiqueta2, JLayeredPane.PALETTE_LAYER);
         
+        //Se añade a una lista las tres diferentes figuras anteriormente creadas con el obejto figuraPrincipal
         ArrayList<ImageIcon> listaDeImagenes = new ArrayList<>();
         listaDeImagenes.add(figuraPrincipal.getFiguraPequeñaConColorRandom());
         listaDeImagenes.add(figuraPrincipal.getfiguraMedianaConColorRandom());
         listaDeImagenes.add(figuraPrincipal.getfiguraGrandeConColorRandom());
 
-        // Baraja la lista de imágenes
+        //Baraja la lista de imágenes para cambiar su orden
         Collections.shuffle(listaDeImagenes);
 
+        //Asiga una de las tres figuras a la etiqueta
         etiqueta2.setIcon(listaDeImagenes.get(0));
         widthImgPrincipal = listaDeImagenes.get(0).getIconWidth();
         heightImgPrincipal = listaDeImagenes.get(0).getIconHeight();
@@ -196,8 +200,10 @@ public class VentanaJuegoTriangulo extends JFrame {
 
     //Establece las tres figuras de la parte derecha
     private void establecerFiguras() {
+        //Se crea un objeto figura que proporcionara la misma figura con tres tamaños distintos (grande, mediano, pequeño)
         figurasSecundarias = new Figura("triangulo.png", colorPrincipal);
         
+        //Se crean las etiquetas fijas donde iran posicionadas las tres figuras con distintos tamaños
         etiqueta6 = new JLabel();
         etiqueta6.setBounds(310, 180, 150, 150);
         etiqueta6.setHorizontalAlignment(JLabel.CENTER);
@@ -213,20 +219,24 @@ public class VentanaJuegoTriangulo extends JFrame {
         etiqueta8.setHorizontalAlignment(JLabel.CENTER);
         etiqueta8.setVerticalAlignment(JLabel.CENTER);
         layeredPane.add(etiqueta8, JLayeredPane.PALETTE_LAYER);
-                
+        
+        //Se añade a una lista las tres diferentes figuras anteriormente creadas con el obejto figurasSecundarias
         ArrayList<ImageIcon> listaDeImagenes = new ArrayList<>();
         listaDeImagenes.add(figurasSecundarias.getFiguraPequeñaConColorRandom());
         listaDeImagenes.add(figurasSecundarias.getfiguraMedianaConColorRandom());
         listaDeImagenes.add(figurasSecundarias.getfiguraGrandeConColorRandom());
 
-        // Baraja la lista de imágenes
+        //Baraja la lista de imágenes para cambiar su orden
         Collections.shuffle(listaDeImagenes);
 
-        // Selecciona las tres primeras imágenes barajadas
+        //Selecciona las tres primeras imágenes barajadas
         for(int i = 0; i < 3; i++){
+            //Asignar imagenes a su recpectiva etiqueta (las imagenes siempre van a cambiar de lugar, las etiquetas son fijas)
             switch(i){
                 case 0 -> {
                     etiqueta6.setIcon(listaDeImagenes.get(0));
+                    
+                    //Validar respuesta correcta por los tamaños de la figura principal
                     if(widthImgPrincipal == listaDeImagenes.get(0).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(0).getIconHeight() ){
                         mouseListenerEt6();
                     }else{
@@ -235,6 +245,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                 }
                 case 1 -> {
                     etiqueta7.setIcon(listaDeImagenes.get(1));
+                    //Validar respuesta correcta por los tamaños de la figura principal
                     if(widthImgPrincipal == listaDeImagenes.get(1).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(1).getIconHeight() ){
                         mouseListenerEt7();
                     }else{
@@ -243,6 +254,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                 }
                 case 2 -> {
                     etiqueta8.setIcon(listaDeImagenes.get(2));
+                    //Validar respuesta correcta por los tamaños de la figura principal
                     if(widthImgPrincipal == listaDeImagenes.get(2).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(2).getIconHeight() ){
                         mouseListenerEt8();  
                     }else{
@@ -325,53 +337,65 @@ public class VentanaJuegoTriangulo extends JFrame {
         });
     }
     
+    //Se ejecuta si la opcion de la etiqueta 6 es incorrecta, suma 1 a fallos
     public void mouseListenerEt6Fallo(){
         etiqueta6.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
+                
+                //Aumenta el numero de aciertos
                 ronda.calcularFallos();
+                
+                //Cambia el numero de fallos
                 etiqueta4.setText("Fallos: " + ronda.getFallos());
-                
-            
-                
             }
         });
     }
     
+    //Se ejecuta si la opcion de la etiqueta 7 es incorrecta, suma 1 a fallos
     public void mouseListenerEt7Fallo(){
         etiqueta7.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
+                
+                //Aumenta el numero de aciertos
                 ronda.calcularFallos();
+                
+                //Cambia el numero de fallos
                 etiqueta4.setText("Fallos: " + ronda.getFallos());
-                
-                
             }
         });
     }
     
+    //Se ejecuta si la opcion de la etiqueta 8 es incorrecta, suma 1 a fallos
     public void mouseListenerEt8Fallo(){
         etiqueta8.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
+                
+                //Aumenta el numero de aciertos
                 ronda.calcularFallos();
+                
+                //Cambia el numero de fallos
                 etiqueta4.setText("Fallos: " + ronda.getFallos());
-                
-                
             }
         });
     }
     
+    //Reproduce un sonido
     private void reproducirSonido(String audio) {
         try {
-            // Carga el archivo de sonido (reemplaza "sonido.wav" con la ubicación de tu archivo de sonido)
+            //Carga el archivo de sonido
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(audio));
             Clip clip = AudioSystem.getClip();
 
-            // Abre el clip y lo reproduce
+            //Abre el clip y lo reproduce
             clip.open(audioInputStream);
             clip.start();
         } catch (Exception e) {
