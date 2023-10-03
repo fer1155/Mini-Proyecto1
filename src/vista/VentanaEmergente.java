@@ -1,3 +1,12 @@
+/*
+Miniproyecto No. 1
+
+Fernando Cardona - 2241381
+Oscar Mario Muñoz - 2242481
+
+Grupo de FPOE: 80
+*/
+
 package vista;
 
 import java.awt.Color;
@@ -5,6 +14,10 @@ import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,7 +28,6 @@ import javax.swing.SwingConstants;
 import modelo.Persona;
 import modelo.Ronda;
 
-
 public class VentanaEmergente extends JFrame {
     private JLayeredPane layeredPane;
     private JPanel panel;
@@ -25,6 +37,7 @@ public class VentanaEmergente extends JFrame {
     private JButton boton1;
     private JButton boton2;
     
+    //Constructor de la ventana emergente
     public VentanaEmergente (Persona jugador, Ronda ronda){
         this.jugador = jugador;
         this.ronda = ronda;
@@ -34,6 +47,7 @@ public class VentanaEmergente extends JFrame {
         iniciarComponentes();
     }
     
+    //Inicia los componentes graficos
     private void iniciarComponentes(){
         establecerLayeredPanel();
         establecerPanel();
@@ -42,11 +56,13 @@ public class VentanaEmergente extends JFrame {
         establecerBoton2();
     }
     
+    //Establece el layeredPanel (Para trabajar con capas)
     private void establecerLayeredPanel() {
         layeredPane = new JLayeredPane();
         this.add(layeredPane);
     }
     
+    //Establece el panel
     private void establecerPanel() {
         panel = new JPanel();
         panel.setBounds(0, 0, this.getWidth(), this.getHeight());
@@ -56,6 +72,7 @@ public class VentanaEmergente extends JFrame {
         layeredPane.add(panel, JLayeredPane.DEFAULT_LAYER);
     }
     
+    //Establece la label inicial (marco)
     private void establecerEtiqueta() {
         etiqueta1 = new JLabel("<html>¿Estás seguro de finalizar el juego?</html>");
         etiqueta1.setBounds(95, 30, 285, 200);
@@ -71,6 +88,7 @@ public class VentanaEmergente extends JFrame {
         layeredPane.add(etiqueta1, JLayeredPane.PALETTE_LAYER);    
     }
     
+    //Establece el boton para volver a la ventana Juego correspondiente
     private void establecerBoton1() {
         boton1 = new JButton("volver");
         boton1.setFocusPainted(false);
@@ -86,13 +104,17 @@ public class VentanaEmergente extends JFrame {
         ActionListener oyenteDeAccion1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Cierra la ventana emergente
+                //Reproduce un sonido al presionar el boton
+                reproducirSonido("boton.wav");
+                
+                //Cierra la ventana emergente
                 dispose();
             }
         };
         boton1.addActionListener(oyenteDeAccion1);
     }
     
+    //Establece el boton que redirecciona a la ventana estadisticas
     private void establecerBoton2() {
         boton2 = new JButton("finalizar");
         boton2.setBounds(250, 150, 110, 45); 
@@ -107,10 +129,13 @@ public class VentanaEmergente extends JFrame {
         ActionListener oyenteDeAccion2 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Reproduce un sonido al presionar el boton
+                reproducirSonido("boton.wav");
+                
                 // Cierra todas las ventanas
                 cerrarTodasLasVentanas();
                 
-                // Abre la ventana de instrucciones
+                //Abre la ventana de estadisticas
                 VentanaEstadisticas ventanaEstadistcas = new VentanaEstadisticas(jugador, ronda);
                 ventanaEstadistcas.setVisible(true);
             }
@@ -118,12 +143,28 @@ public class VentanaEmergente extends JFrame {
         boton2.addActionListener(oyenteDeAccion2);
     } 
     
+    //Cierra todas las ventanas en ejecucion 
     public static void cerrarTodasLasVentanas() {
         Window[] windows = Window.getWindows();
         for(Window ventana : windows) {
             if(ventana instanceof JFrame) {
                 ventana.dispose();
             }
+        }
+    }
+    
+    //Reproduce un sonido
+    private void reproducirSonido(String audio) {
+        try {
+            //Carga el archivo de sonido
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(audio));
+            Clip clip = AudioSystem.getClip();
+
+            // Abre el clip y lo reproduce
+            clip.open(audioInputStream);
+            clip.start();
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 }
