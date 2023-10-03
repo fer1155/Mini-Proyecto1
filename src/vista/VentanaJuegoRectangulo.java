@@ -106,7 +106,7 @@ public class VentanaJuegoRectangulo extends JFrame {
     //Establece label del nombre del jugador
     private void establecerEtiqueta1() {
         etiqueta1 = new JLabel("Jugador: " + jugador.getNombre());
-        etiqueta1.setBounds(10, 20, 243, 50);
+        etiqueta1.setBounds(10, 20, 240, 50);
         Color colorLetra = new Color(51, 51, 51);
         etiqueta1.setForeground(colorLetra);
         etiqueta1.setFont(new Font("Kristen ITC", 1, 20));
@@ -188,12 +188,11 @@ public class VentanaJuegoRectangulo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Reproduce un sonido al presionar el boton
-                reproducirSonido("boton.wav");
+                reproducirSonido("click.wav");
                 
                 // Abre la ventana emergente
                 VentanaEmergente ventanaEmergente = new VentanaEmergente(jugador, ronda);
                 ventanaEmergente.setVisible(true);
-                reproducirSonido("click.wav");
             }
         };
         boton2.addActionListener(oyenteDeAccion1);
