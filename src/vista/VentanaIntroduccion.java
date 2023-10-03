@@ -1,3 +1,12 @@
+/*
+Miniproyecto No. 1
+
+Fernando Cardona - 2241381
+Oscar Mario Muñoz - 2242481
+
+Grupo de FPOE: 80
+*/
+
 package vista;
 
 import modelo.Persona;
@@ -6,6 +15,10 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,6 +37,7 @@ public class VentanaIntroduccion extends JFrame {
     private JTextField cajaTexto;
     private JButton boton1;
     
+    //Constructor de la ventana introduccion
     public VentanaIntroduccion (){
         this.setBounds(200, 50, 900, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -32,6 +46,7 @@ public class VentanaIntroduccion extends JFrame {
         iniciarComponentes();
     }
     
+    //Inicia los componentes graficos
     private void iniciarComponentes(){
         establecerLayeredPanel();
         establecerPanel();
@@ -41,11 +56,13 @@ public class VentanaIntroduccion extends JFrame {
         establecerBoton();
     }
     
+    //Establece el layeredPanel (Para trabajar con capas)
     private void establecerLayeredPanel() {
         layeredPane = new JLayeredPane();
         this.add(layeredPane);
     }
     
+    //Establece el panel
     private void establecerPanel() {
         panel = new JPanel();
         panel.setBounds(0, 0, this.getWidth(), this.getHeight());
@@ -54,7 +71,8 @@ public class VentanaIntroduccion extends JFrame {
         panel.setLayout(null);
         layeredPane.add(panel, JLayeredPane.DEFAULT_LAYER);
     }
-
+    
+    //Establece la label inicial
     private void establecerEtiqueta() {
         etiqueta = new JLabel("<html>¡Saludos, pequeños aventureros! Soy Rectangulin, el guardián de este mágico juego que están a punto de explorar, pero antes escribe tu nombre.</html>");
         etiqueta.setBounds(140, 50, 600, 400);
@@ -69,7 +87,8 @@ public class VentanaIntroduccion extends JFrame {
         etiqueta.setFont(new Font("Centaur", 1, 40));
         layeredPane.add(etiqueta, JLayeredPane.PALETTE_LAYER);    
     }
-
+    
+    //Establece imagen de "Rectangulin"
     private void establecerImagen() {
         imagen = new ImageIcon("rectangulin.png");
         JLabel etiquetaImg = new JLabel();
@@ -78,6 +97,7 @@ public class VentanaIntroduccion extends JFrame {
         layeredPane.add(etiquetaImg, JLayeredPane.MODAL_LAYER);
     }
 
+    //Establece la caja de texto para ingresar el nombre 
     private void establecerCajaDeTexto() {
         cajaTexto = new JTextField();
         cajaTexto.setBounds(400, 330, 300, 50);
@@ -87,6 +107,7 @@ public class VentanaIntroduccion extends JFrame {
         layeredPane.add(cajaTexto, JLayeredPane.MODAL_LAYER);
     }
 
+    //Establece el boton que redirecciona al menu principal
     private void establecerBoton() {
         boton1 = new JButton("Iniciar Juego");
         boton1.setBounds(500, 480, 200, 40); 
@@ -101,16 +122,35 @@ public class VentanaIntroduccion extends JFrame {
         ActionListener oyenteDeAccion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Crea un objeto persona a partir del nombre
                 Persona jugador = new Persona(cajaTexto.getText());
                 
-                // Cierra la ventana introduccion
+                //Reproduce un sonido al presionar el boton
+                reproducirSonido("entraraljuego.wav");
+                
+                //Cierra la ventana introduccion
                 dispose();
-                // Abre la ventana principal
+                
+                //Abre la ventana principal
                 VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(jugador);
                 ventanaPrincipal.setVisible(true);
             }
         };
-        
         boton1.addActionListener(oyenteDeAccion);
+    }
+    
+    //Reproduce un sonido
+    private void reproducirSonido(String audio) {
+        try {
+            //Carga el archivo de sonido
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(audio));
+            Clip clip = AudioSystem.getClip();
+
+            // Abre el clip y lo reproduce
+            clip.open(audioInputStream);
+            clip.start();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }
