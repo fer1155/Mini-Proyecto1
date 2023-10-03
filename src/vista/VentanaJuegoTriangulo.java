@@ -1,4 +1,14 @@
+/*
+Miniproyecto No. 1
+
+Fernando Cardona - 2241381
+Oscar Mario Muñoz - 2242481
+
+Grupo de FPOE: 80
+*/
+
 package vista;
+
 import modelo.Persona;
 import modelo.Ronda;
 import modelo.Figura;
@@ -10,7 +20,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -22,8 +31,6 @@ import javax.swing.JPanel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import java.util.Collections;
 import javax.sound.sampled.*;
-
-
 
 public class VentanaJuegoTriangulo extends JFrame {
     private Ronda ronda;
@@ -46,8 +53,7 @@ public class VentanaJuegoTriangulo extends JFrame {
     private Figura figuraPrincipal;
     private Figura figurasSecundarias;
    
-    
-    
+    //Constructor de la ventana juego de la figura triangulo
     public VentanaJuegoTriangulo(Persona jugador, Ronda ronda){
         this.jugador = jugador;
         this.ronda = ronda;
@@ -58,6 +64,7 @@ public class VentanaJuegoTriangulo extends JFrame {
         iniciarComponentes();
     }
     
+    //Inicia los componentes graficos
     private void iniciarComponentes(){
         establecerLayeredPanelBase();
         establecerPanel();
@@ -71,11 +78,13 @@ public class VentanaJuegoTriangulo extends JFrame {
         establecerBoton2();
     }
     
+    //Establece el layeredPanel (Para trabajar con capas)
     private void establecerLayeredPanelBase() {
         layeredPane = new JLayeredPane();
         this.add(layeredPane);
     }
     
+    //Establece el panel
     private void establecerPanel() {
         panel = new JPanel();
         panel.setBounds(0, 0, this.getWidth(), this.getHeight());
@@ -85,6 +94,7 @@ public class VentanaJuegoTriangulo extends JFrame {
         layeredPane.add(panel, JLayeredPane.DEFAULT_LAYER);
     }
     
+    //Establece imagen de "linea"
     private void establecerImagen() {
         imagen = new ImageIcon("linea.png");
         JLabel etiquetaImg = new JLabel();
@@ -93,6 +103,7 @@ public class VentanaJuegoTriangulo extends JFrame {
         layeredPane.add(etiquetaImg, JLayeredPane.PALETTE_LAYER);
     }
     
+    //Establece label del nombre del jugador
     private void establecerEtiqueta1() {
         etiqueta1 = new JLabel("Jugador: " + jugador.getNombre());
         etiqueta1.setBounds(10, 20, 243, 50);
@@ -102,6 +113,7 @@ public class VentanaJuegoTriangulo extends JFrame {
         layeredPane.add(etiqueta1, JLayeredPane.PALETTE_LAYER);  
     }
     
+    //Establece figura de la parte izquierda
     private void establecerFigura1() {
         figuraPrincipal = new Figura("triangulo.png");
 
@@ -125,6 +137,7 @@ public class VentanaJuegoTriangulo extends JFrame {
         colorPrincipal  = figuraPrincipal.getColorAleatorio();
     }
 
+    //Establece label de los aciertos
     private void establecerEtiqueta3() {
          etiqueta3 = new JLabel("Aciertos: " + ronda.getAciertos());
          etiqueta3.setBounds(270, 20, 243, 50);
@@ -134,6 +147,7 @@ public class VentanaJuegoTriangulo extends JFrame {
          layeredPane.add(etiqueta3, JLayeredPane.PALETTE_LAYER);  
     }
 
+    //Establece label de los fallos
     private void establecerEtiqueta4() {
         etiqueta4 = new JLabel("Fallos: " + ronda.getFallos());
         etiqueta4.setBounds(720, 20, 243, 50);
@@ -143,6 +157,7 @@ public class VentanaJuegoTriangulo extends JFrame {
         layeredPane.add(etiqueta4, JLayeredPane.PALETTE_LAYER);  
     }
 
+    //Establece label del numero de la rona
     private void establecerEtiqueta5() {
         etiqueta5 = new JLabel("Figura No: " + ronda.getRonda());
         etiqueta5.setBounds(270, 490, 243, 50);
@@ -152,6 +167,7 @@ public class VentanaJuegoTriangulo extends JFrame {
         layeredPane.add(etiqueta5, JLayeredPane.PALETTE_LAYER);  
     }
 
+    //Establece el boton que redirecciona a la ventana emergente
     private void establecerBoton2() {
         boton2 = new JButton("Finalizar");
         boton2.setFocusPainted(false);
@@ -167,7 +183,9 @@ public class VentanaJuegoTriangulo extends JFrame {
         ActionListener oyenteDeAccion1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //Reproduce un sonido al presionar el boton
+                reproducirSonido("boton.wav");
+                
                 // Abre la ventana emergente
                 VentanaEmergente ventanaEmergente = new VentanaEmergente(jugador, ronda);
                 ventanaEmergente.setVisible(true);
@@ -176,6 +194,7 @@ public class VentanaJuegoTriangulo extends JFrame {
         boton2.addActionListener(oyenteDeAccion1);
     }
 
+    //Establece las tres figuras de la parte derecha
     private void establecerFiguras() {
         figurasSecundarias = new Figura("triangulo.png", colorPrincipal);
         
@@ -206,40 +225,46 @@ public class VentanaJuegoTriangulo extends JFrame {
         // Selecciona las tres primeras imágenes barajadas
         for(int i = 0; i < 3; i++){
             switch(i){
-                case 0:
+                case 0 -> {
                     etiqueta6.setIcon(listaDeImagenes.get(0));
                     if(widthImgPrincipal == listaDeImagenes.get(0).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(0).getIconHeight() ){
                         mouseListenerEt6();
                     }else{
                         mouseListenerEt6Fallo(); 
                     }
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     etiqueta7.setIcon(listaDeImagenes.get(1));
                     if(widthImgPrincipal == listaDeImagenes.get(1).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(1).getIconHeight() ){
                         mouseListenerEt7();
                     }else{
                         mouseListenerEt7Fallo(); 
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     etiqueta8.setIcon(listaDeImagenes.get(2));
                     if(widthImgPrincipal == listaDeImagenes.get(2).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(2).getIconHeight() ){
                         mouseListenerEt8();  
                     }else{
                         mouseListenerEt8Fallo();
                     }
-                    break;
+                }
             }
         }  
     }
     
+    //Se ejecuta si la opcion de la etiqueta 6 es correcta, abre la ventana del juego de la figura cuadrado
     public void mouseListenerEt6(){
         etiqueta6.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //Aumenta el numero de rondas
                 ronda.calcularRonda();
+                
+                //Aumenta el numero de aciertos
                 ronda.calcularAciertos();
+                
+                //Reproduce un sonido al presionar la respuesta correcta
                 reproducirSonido("acierto.wav");
                 
                 // Abre la ventana cuadrado
@@ -252,12 +277,18 @@ public class VentanaJuegoTriangulo extends JFrame {
         });
     }
     
+    //Se ejecuta si la opcion de la etiqueta 7 es correcta, abre la ventana del juego de la figura cuadrado
     public void mouseListenerEt7(){
         etiqueta7.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //Aumenta el numero de rondas
                 ronda.calcularRonda();
+                
+                //Aumenta el numero de aciertos
                 ronda.calcularAciertos();
+                
+                //Reproduce un sonido al presionar la respuesta correcta
                 reproducirSonido("acierto.wav");
                 
                 // Abre la ventana cuadrado
@@ -270,12 +301,18 @@ public class VentanaJuegoTriangulo extends JFrame {
         });
     }
     
+    //Se ejecuta si la opcion de la etiqueta 8 es correcta, abre la ventana del juego de la figura cuadrado
     public void mouseListenerEt8(){
         etiqueta8.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //Aumenta el numero de rondas
                 ronda.calcularRonda();
+                
+                //Aumenta el numero de aciertos
                 ronda.calcularAciertos();
+                
+                //Reproduce un sonido al presionar la respuesta correcta
                 reproducirSonido("acierto.wav");
                 
                 // Abre la ventana cuadrado

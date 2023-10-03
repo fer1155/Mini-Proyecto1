@@ -1,3 +1,12 @@
+/*
+Miniproyecto No. 1
+
+Fernando Cardona - 2241381
+Oscar Mario Muñoz - 2242481
+
+Grupo de FPOE: 80
+*/
+
 package modelo;
 
 import java.awt.AlphaComposite;
@@ -17,22 +26,23 @@ public class Figura extends ImageIcon{
     private ImageIcon figuraGrandeConColorRandom;
     private ImageIcon figuraMedianaConColorRandom;
 
+    //Constructor de figura (Unica figura de la izquierda)
     public Figura(String imagen) {
         ImageIcon figura = new ImageIcon(imagen);
 
         establecerTamañoFiguras(figura);
         generarColorRandom();
         
-        figuraMedianaConColorRandom = cambiarColor(figuraMediana, colorAleatorio);
         figuraGrandeConColorRandom = cambiarColor(figuraGrande, colorAleatorio);
+        figuraMedianaConColorRandom = cambiarColor(figuraMediana, colorAleatorio);
         figuraPequeñaConColorRandom = cambiarColor(figuraPequeña,colorAleatorio);
     }
     
+    //Constructor de figura con el colorRandom antes generado (Tres figuras de la derecha)
     public Figura(String imagen, Color colorYaAntesGenerado) {
         ImageIcon figura = new ImageIcon(imagen);
 
         establecerTamañoFiguras(figura);
-        generarColorRandom();
         
         figuraMedianaConColorRandom = cambiarColor(figuraMediana, colorYaAntesGenerado);
         figuraGrandeConColorRandom = cambiarColor(figuraGrande, colorYaAntesGenerado);
@@ -58,22 +68,23 @@ public class Figura extends ImageIcon{
         int alto = figura.getIconHeight();
         
         BufferedImage imagen = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = imagen.createGraphics();
+        Graphics2D grafico = imagen.createGraphics();
         
-        // Dibuja la imagen original en el BufferedImage
-        figura.paintIcon(null, g, 0, 0);
+        //Dibuja la imagen original en el BufferedImage
+        figura.paintIcon(null, grafico, 0, 0);
         
-        // Cambia el color de la imagen usando el color deseado
-        g.setColor(color);
-        g.setComposite(AlphaComposite.SrcAtop);
-        g.fillRect(0, 0, ancho, alto);
+        //Cambia el color de la imagen usando el color deseado
+        grafico.setColor(color);
+        grafico.setComposite(AlphaComposite.SrcAtop);
+        grafico.fillRect(0, 0, ancho, alto);
         
-        // Crea un nuevo ImageIcon a partir del BufferedImage modificado
-        ImageIcon coloredIcon = new ImageIcon(imagen);
+        //Crea una nueva imagen a partir del BufferedImage modificado
+        ImageIcon imagenConColorModificado = new ImageIcon(imagen);
         
-        return coloredIcon;
+        return imagenConColorModificado;
     }
     
+    //Getters
     public ImageIcon getFiguraPequeñaConColorRandom(){
         return figuraPequeñaConColorRandom;
     }
