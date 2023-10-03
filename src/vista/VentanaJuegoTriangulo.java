@@ -161,7 +161,7 @@ public class VentanaJuegoTriangulo extends JFrame {
         layeredPane.add(etiqueta4, JLayeredPane.PALETTE_LAYER);  
     }
 
-    //Establece label del numero de la rona
+    //Establece label del numero de la ronda
     private void establecerEtiqueta5() {
         etiqueta5 = new JLabel("Figura No: " + ronda.getRonda());
         etiqueta5.setBounds(270, 490, 243, 50);
@@ -245,6 +245,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                 }
                 case 1 -> {
                     etiqueta7.setIcon(listaDeImagenes.get(1));
+                    
                     //Validar respuesta correcta por los tamaños de la figura principal
                     if(widthImgPrincipal == listaDeImagenes.get(1).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(1).getIconHeight() ){
                         mouseListenerEt7();
@@ -254,6 +255,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                 }
                 case 2 -> {
                     etiqueta8.setIcon(listaDeImagenes.get(2));
+                    
                     //Validar respuesta correcta por los tamaños de la figura principal
                     if(widthImgPrincipal == listaDeImagenes.get(2).getIconWidth() && heightImgPrincipal == listaDeImagenes.get(2).getIconHeight() ){
                         mouseListenerEt8();  
@@ -345,7 +347,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                 //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
                 
-                //Aumenta el numero de aciertos
+                //Aumenta el numero de fallos
                 ronda.calcularFallos();
                 
                 //Cambia el numero de fallos
@@ -362,7 +364,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                 //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
                 
-                //Aumenta el numero de aciertos
+                //Aumenta el numero de fallos
                 ronda.calcularFallos();
                 
                 //Cambia el numero de fallos
@@ -379,7 +381,7 @@ public class VentanaJuegoTriangulo extends JFrame {
                 //Reproduce un sonido al presionar la respuesta incorrecta
                 reproducirSonido("fallo.wav");
                 
-                //Aumenta el numero de aciertos
+                //Aumenta el numero de fallos
                 ronda.calcularFallos();
                 
                 //Cambia el numero de fallos

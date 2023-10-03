@@ -1,3 +1,12 @@
+/*
+Miniproyecto No. 1
+
+Fernando Cardona - 2241381
+Oscar Mario Muñoz - 2242481
+
+Grupo de FPOE: 80
+*/
+
 package vista;
 
 import java.awt.Color;
@@ -5,6 +14,10 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,6 +46,7 @@ public class VentanaEstadisticas extends JFrame {
     private JButton botonSalir;
     private JButton botonSecreto;
     
+    //Constructor de la ventana Estadisticas
     public VentanaEstadisticas (Persona jugador, Ronda ronda){
         this.jugador = jugador;
         this.ronda = ronda;
@@ -43,6 +57,7 @@ public class VentanaEstadisticas extends JFrame {
         iniciarComponentes();
     }
     
+    //Inicia los componentes graficos
     private void iniciarComponentes(){
         establecerLayeredPanel();
         establecerPanel();
@@ -54,11 +69,13 @@ public class VentanaEstadisticas extends JFrame {
         establecerBotonSecreto();
     }
     
+    //Establece el layeredPanel (Para trabajar con capas)
     private void establecerLayeredPanel() {
         layeredPane = new JLayeredPane();
         this.add(layeredPane);
     }
     
+    //Establece el panel
     private void establecerPanel() {
         panel = new JPanel();
         panel.setBounds(0, 0, this.getWidth(), this.getHeight());
@@ -68,8 +85,9 @@ public class VentanaEstadisticas extends JFrame {
         layeredPane.add(panel, JLayeredPane.DEFAULT_LAYER);
     }
     
+    //Establece la label inicial (marco y texto inicial)
     private void establecerEtiqueta() {
-        etiqueta = new JLabel("¡Gracias por jugar " + jugador.getNombre()+"! " + "¡Muy bien!" );
+        etiqueta = new JLabel("¡Gracias por jugar " + jugador.getNombre()+"! ¡Muy bien!" );
         etiqueta.setBounds(140, 50, 600, 400);
         etiqueta.setVerticalAlignment(SwingConstants.TOP);
         etiqueta.setOpaque(true); 
@@ -83,6 +101,7 @@ public class VentanaEstadisticas extends JFrame {
         layeredPane.add(etiqueta, JLayeredPane.PALETTE_LAYER);    
     }
 
+    //Establece imagen de "Rectangulin"
     private void establecerImagen() {
         imagen = new ImageIcon("rectangulin.png");
         JLabel etiquetaImg = new JLabel();
@@ -91,6 +110,7 @@ public class VentanaEstadisticas extends JFrame {
         layeredPane.add(etiquetaImg, JLayeredPane.MODAL_LAYER);
     }
     
+    //Establece label de las estadisticas
     private void establecerEtiquetas() {
         etiqueta2 = new JLabel("Estas fueron tus estadisticas: " );
         etiqueta2.setBounds(145, 110,440, 50);
@@ -118,6 +138,7 @@ public class VentanaEstadisticas extends JFrame {
         layeredPane.add(etiqueta6, JLayeredPane.MODAL_LAYER);
     }
     
+    //Establece el boton para volver a la ventana introduccion
     private void establecerBoton() {
         boton = new JButton("Volver a jugar");
         boton.setFocusPainted(false);
@@ -133,16 +154,21 @@ public class VentanaEstadisticas extends JFrame {
         ActionListener oyenteDeAccion1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                // Abre la ventana de introducción
-                VentanaIntroduccion ventanaIntroduccion = new VentanaIntroduccion();
-                ventanaIntroduccion.setVisible(true);
+                //Reproduce un sonido al presionar el boton
+                reproducirSonido("boton.wav");
+                
+                //Cierra la ventana estadisticas
                 dispose();
+                
+                //Abre la ventana de introducción
+                VentanaIntroduccion ventanaIntroduccion = new VentanaIntroduccion();
+                ventanaIntroduccion.setVisible(true);   
             }
         };
         boton.addActionListener(oyenteDeAccion1);
     }
     
+    //Establece boton para salir totalmente del juego
     private void establecerBotonSalir() {
         botonSalir = new JButton("Salir");
         botonSalir.setFocusPainted(false);
@@ -158,14 +184,17 @@ public class VentanaEstadisticas extends JFrame {
         ActionListener oyenteDeAccion1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                // Cierra todo
+                //Reproduce un sonido al presionar el boton
+                reproducirSonido("boton.wav");
+                
+                //Cierra ventana estadisticas
                 dispose();
             }
         };
         botonSalir.addActionListener(oyenteDeAccion1);
     }
     
+    //Establece boton secreto (creditos)
     private void establecerBotonSecreto(){
         botonSecreto = new JButton();
         boton.setFocusPainted(false);
@@ -175,13 +204,29 @@ public class VentanaEstadisticas extends JFrame {
         ActionListener oyenteDeAccion1 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                // Abre la ventana de secreta
+                reproducirSonido("secreto.wav");
+                
+                //Abre la ventana secreta
                 VentanaSecreta ventanaSecreta = new VentanaSecreta();
                 ventanaSecreta.setVisible(true);
                 
             }
         };
         botonSecreto.addActionListener(oyenteDeAccion1);
+    }
+    
+    //Reproduce un sonido
+    private void reproducirSonido(String audio) {
+        try {
+            //Carga el archivo de sonido
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(audio));
+            Clip clip = AudioSystem.getClip();
+
+            // Abre el clip y lo reproduce
+            clip.open(audioInputStream);
+            clip.start();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }
