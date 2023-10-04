@@ -87,7 +87,8 @@ public class VentanaEstadisticas extends JFrame {
     
     //Establece la label inicial (marco y texto inicial)
     private void establecerEtiqueta() {
-        etiqueta = new JLabel("¡Gracias por jugar " + jugador.getNombre()+"! ¡Muy bien!" );
+        etiqueta = new JLabel("<html>¡Gracias por jugar " + jugador.getNombre()+"!, ¡Muy bien!</html>");
+        //etiqueta = new JLabel("<html>¡oye " + jugador.getNombre() + "!, mira la figura que está a la izquierda y luego elige la figura que más se parezca en el lado derecho.</html>");
         etiqueta.setBounds(140, 50, 600, 400);
         etiqueta.setVerticalAlignment(SwingConstants.TOP);
         etiqueta.setOpaque(true); 
@@ -113,27 +114,27 @@ public class VentanaEstadisticas extends JFrame {
     //Establece label de las estadisticas
     private void establecerEtiquetas() {
         etiqueta2 = new JLabel("Estas fueron tus estadisticas: " );
-        etiqueta2.setBounds(145, 110,440, 50);
+        etiqueta2.setBounds(145, 120,440, 50);
         etiqueta2.setFont(new Font("Bell MT", 1, 32));
         layeredPane.add(etiqueta2, JLayeredPane.MODAL_LAYER);
         
         etiqueta3 = new JLabel("Cantidad de figuras desplegadas: " + ronda.getRonda());
-        etiqueta3.setBounds(145, 155,550, 50);
+        etiqueta3.setBounds(145, 160,550, 50);
         etiqueta3.setFont(new Font("Bell MT", 1, 32));
         layeredPane.add(etiqueta3, JLayeredPane.MODAL_LAYER);
         
         etiqueta4 = new JLabel("Cantidad de aciertos: " + ronda.getAciertos()+" ("+ronda.calcularPorcentajeAciertos()+"%)");
-        etiqueta4.setBounds(145, 240,440, 50);
+        etiqueta4.setBounds(145, 245,440, 50);
         etiqueta4.setFont(new Font("Bell MT", 1, 32));
         layeredPane.add(etiqueta4, JLayeredPane.MODAL_LAYER);
         
         etiqueta5 = new JLabel("Cantidad de fallos: "+ ronda.getFallos()+" ("+ronda.calcularPorcentajeFallos()+"%)" );
-        etiqueta5.setBounds(145, 290,440, 50);
+        etiqueta5.setBounds(145, 295,440, 50);
         etiqueta5.setFont(new Font("Bell MT", 1, 32));
         layeredPane.add(etiqueta5, JLayeredPane.MODAL_LAYER);
         
         etiqueta6 = new JLabel("Numero de intentos: " + ronda.getIntentos());
-        etiqueta6.setBounds(145, 197,500, 50);
+        etiqueta6.setBounds(145, 202,500, 50);
         etiqueta6.setFont(new Font("Bell MT", 1, 32));
         layeredPane.add(etiqueta6, JLayeredPane.MODAL_LAYER);
     }
